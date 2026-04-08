@@ -3,977 +3,454 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ganate una Camiseta de Antique Patagonia</title>
+<title>Ganate una Camiseta · Antique Patagonia</title>
 <meta property="og:title" content="Ganate una Camiseta de Antique Patagonia 🇦🇷">
 <meta property="og:description" content="11 camisetas, 11 desafíos. ¿Conocés tu selección?">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700&family=Barlow:wght@400;500&display=swap');
-
-:root {
-  --celeste: #74ACDF;
-  --blanco: #FFFFFF;
-  --negro: #0a0a0a;
-  --oro: #F0C040;
-  --rojo: #C8102E;
-  --verde-ok: #00C851;
-  --gris-oscuro: #1a1a2e;
-  --gris-medio: #2a2a4a;
-}
-
-* { margin: 0; padding: 0; box-sizing: border-box; }
-
-body {
-  background: var(--gris-oscuro);
-  color: var(--blanco);
-  font-family: 'Barlow', sans-serif;
-  min-height: 100vh;
-  overflow-x: hidden;
-}
-
-/* ── FONDO ANIMADO ── */
-.bg-field {
-  position: fixed; inset: 0; z-index: 0;
-  background: 
-    repeating-linear-gradient(90deg, rgba(116,172,223,.04) 0px, rgba(116,172,223,.04) 1px, transparent 1px, transparent 80px),
-    repeating-linear-gradient(0deg, rgba(116,172,223,.04) 0px, rgba(116,172,223,.04) 1px, transparent 1px, transparent 80px),
-    radial-gradient(ellipse at 50% 0%, rgba(116,172,223,.15) 0%, transparent 60%),
-    var(--gris-oscuro);
-  animation: fieldPulse 8s ease-in-out infinite;
-}
-@keyframes fieldPulse {
-  0%,100% { opacity: 1; }
-  50% { opacity: .7; }
-}
-
-/* ── LAYOUT ── */
-.container {
-  position: relative; z-index: 1;
-  max-width: 480px; margin: 0 auto;
-  padding: 0 20px 40px;
-  min-height: 100vh;
-  display: flex; flex-direction: column; align-items: center;
-}
-
-/* ── HEADER ── */
-.header {
-  width: 100%; text-align: center;
-  padding: 32px 0 24px;
-  border-bottom: 1px solid rgba(116,172,223,.2);
-  margin-bottom: 28px;
-}
-.header-brand {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 13px; letter-spacing: 4px;
-  color: var(--celeste); opacity: .7;
-  margin-bottom: 8px;
-}
-.header-title {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(28px, 8vw, 42px);
-  line-height: 1; letter-spacing: 2px;
-  color: var(--blanco);
-}
-.header-title span { color: var(--celeste); }
-.header-sub {
-  margin-top: 10px;
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 14px; letter-spacing: 1px;
-  color: rgba(255,255,255,.5);
-}
-.countdown-bar {
-  margin-top: 16px;
-  display: inline-flex; align-items: center; gap: 8px;
-  background: rgba(240,192,64,.1);
-  border: 1px solid rgba(240,192,64,.3);
-  border-radius: 20px; padding: 6px 16px;
-}
-.countdown-bar span { font-family: 'Bebas Neue', sans-serif; font-size: 15px; color: var(--oro); }
-.countdown-bar small { font-size: 11px; color: rgba(240,192,64,.6); letter-spacing: 1px; }
-
-/* ── SELECTOR DE JUGADOR ── */
-.section-label {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 11px; letter-spacing: 3px; color: rgba(255,255,255,.4);
-  margin-bottom: 14px; text-transform: uppercase;
-  width: 100%;
-}
-.players-grid {
-  display: grid; grid-template-columns: repeat(3, 1fr);
-  gap: 8px; width: 100%; margin-bottom: 28px;
-}
-.player-btn {
-  background: var(--gris-medio);
-  border: 1px solid rgba(116,172,223,.2);
-  border-radius: 10px; padding: 10px 6px;
-  cursor: pointer; transition: all .2s;
-  text-align: center;
-  position: relative; overflow: hidden;
-}
-.player-btn:hover { border-color: var(--celeste); transform: translateY(-2px); }
-.player-btn.active { border-color: var(--celeste); background: rgba(116,172,223,.15); }
-.player-btn.won { border-color: var(--oro); background: rgba(240,192,64,.1); }
-.player-btn.won::after {
-  content: '✓'; position: absolute; top: 4px; right: 6px;
-  font-size: 10px; color: var(--oro);
-}
-.player-num {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 22px; color: var(--celeste); line-height: 1;
-}
-.player-name {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 10px; color: rgba(255,255,255,.6);
-  margin-top: 2px; line-height: 1.2;
-}
-
-/* ── ARENA DE JUEGO ── */
-.game-arena {
-  width: 100%;
-  background: rgba(255,255,255,.03);
-  border: 1px solid rgba(116,172,223,.15);
-  border-radius: 20px;
-  padding: 28px 24px;
-  display: none;
-}
-.game-arena.active { display: block; }
-
-.player-header {
-  display: flex; align-items: center; gap: 16px;
-  margin-bottom: 24px; padding-bottom: 20px;
-  border-bottom: 1px solid rgba(255,255,255,.08);
-}
-.jersey-icon {
-  width: 56px; height: 56px;
-  background: linear-gradient(135deg, var(--celeste) 0%, rgba(116,172,223,.5) 100%);
-  border-radius: 12px;
-  display: flex; align-items: center; justify-content: center;
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 22px; color: var(--negro);
-  flex-shrink: 0;
-}
-.player-info-name {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 24px; line-height: 1;
-}
-.player-info-pos {
-  font-size: 12px; color: rgba(255,255,255,.4);
-  font-family: 'Barlow Condensed', sans-serif;
-  letter-spacing: 1px; margin-top: 2px;
-}
-
-/* ── PROGRESO ── */
-.progress-row {
-  display: flex; gap: 4px; margin-bottom: 24px;
-}
-.prog-dot {
-  flex: 1; height: 4px; border-radius: 2px;
-  background: rgba(255,255,255,.1);
-  transition: background .3s;
-}
-.prog-dot.done { background: var(--celeste); }
-.prog-dot.fail { background: var(--rojo); }
-.prog-dot.current { background: var(--oro); animation: blink 1s ease-in-out infinite; }
-@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.4} }
-
-/* ── NIVEL LABEL ── */
-.level-label {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 11px; letter-spacing: 2px; color: rgba(255,255,255,.35);
-  margin-bottom: 8px;
-}
-.level-zone {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 13px; letter-spacing: 2px;
-  margin-bottom: 16px;
-}
-.level-zone.exterior { color: rgba(116,172,223,.6); }
-.level-zone.interior { color: rgba(240,192,64,.8); }
-.level-zone.premio { color: var(--verde-ok); }
-
-/* ── QR ANIMADO ── */
-.qr-wrapper {
-  display: flex; justify-content: center;
-  margin-bottom: 24px;
-  perspective: 600px;
-}
-.qr-cube {
-  width: 140px; height: 140px;
-  position: relative;
-  transform-style: preserve-3d;
-  animation: rotar 6s linear infinite;
-}
-@keyframes rotar {
-  0%   { transform: rotateY(0deg) rotateX(10deg); }
-  100% { transform: rotateY(360deg) rotateX(10deg); }
-}
-.qr-cube.paused { animation-play-state: paused; }
-.qr-face {
-  position: absolute; inset: 0;
-  border: 2px solid var(--celeste);
-  background: rgba(116,172,223,.06);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 10px;
-  backface-visibility: visible;
-}
-.qr-face svg { width: 80px; height: 80px; opacity: .6; }
-.qr-face.front  { transform: translateZ(70px); }
-.qr-face.back   { transform: translateZ(-70px) rotateY(180deg); }
-.qr-face.left   { transform: translateX(-70px) rotateY(-90deg); }
-.qr-face.right  { transform: translateX(70px) rotateY(90deg); }
-.qr-face.top    { transform: translateY(-70px) rotateX(90deg); }
-.qr-face.bottom { transform: translateY(70px) rotateX(-90deg); }
-
-/* ── INPUT DE RESPUESTA ── */
-.input-zone { margin-bottom: 16px; }
-.input-label {
-  font-size: 12px; color: rgba(255,255,255,.4);
-  font-family: 'Barlow Condensed', sans-serif;
-  letter-spacing: 1px; margin-bottom: 8px;
-}
-.answer-input {
-  width: 100%;
-  background: rgba(255,255,255,.06);
-  border: 1px solid rgba(116,172,223,.3);
-  border-radius: 10px;
-  padding: 14px 16px;
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 20px; letter-spacing: 3px;
-  color: var(--blanco);
-  text-align: center;
-  outline: none;
-  transition: border-color .2s;
-  text-transform: uppercase;
-}
-.answer-input:focus { border-color: var(--celeste); }
-.answer-input.shake {
-  animation: shake .4s ease;
-  border-color: var(--rojo);
-}
-@keyframes shake {
-  0%,100%{transform:translateX(0)}
-  20%{transform:translateX(-8px)}
-  40%{transform:translateX(8px)}
-  60%{transform:translateX(-5px)}
-  80%{transform:translateX(5px)}
-}
-.answer-input.correct { border-color: var(--verde-ok); }
-
-/* ── PISTA ── */
-.hint-box {
-  background: rgba(116,172,223,.07);
-  border: 1px solid rgba(116,172,223,.15);
-  border-radius: 10px; padding: 14px 16px;
-  margin-bottom: 16px;
-}
-.hint-box p {
-  font-size: 14px; line-height: 1.6;
-  color: rgba(255,255,255,.75);
-}
-.hint-box .hint-tag {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 10px; letter-spacing: 2px;
-  color: var(--celeste); opacity: .6;
-  margin-bottom: 6px;
-}
-
-/* ── MENSAJE NARRATIVO ── */
-.narrative-msg {
-  text-align: center;
-  padding: 20px;
-  border-radius: 12px;
-  margin-bottom: 16px;
-  display: none;
-}
-.narrative-msg.show { display: block; }
-.narrative-msg.fail-msg {
-  background: rgba(200,16,46,.1);
-  border: 1px solid rgba(200,16,46,.3);
-}
-.narrative-msg.ok-msg {
-  background: rgba(0,200,81,.1);
-  border: 1px solid rgba(0,200,81,.3);
-}
-.narrative-msg.win-msg {
-  background: rgba(240,192,64,.12);
-  border: 1px solid rgba(240,192,64,.4);
-}
-.narrative-emoji { font-size: 32px; margin-bottom: 8px; }
-.narrative-text {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 17px; line-height: 1.4;
-  font-weight: 600;
-}
-.narrative-text.fail-msg { color: rgba(200,16,46,.9); }
-.narrative-text.ok-msg { color: rgba(0,200,81,.9); }
-.narrative-text.win-msg { color: var(--oro); }
-
-/* ── BOTÓN SUBMIT ── */
-.btn-submit {
-  width: 100%;
-  background: var(--celeste);
-  border: none; border-radius: 10px;
-  padding: 15px;
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 18px; letter-spacing: 3px;
-  color: var(--negro);
-  cursor: pointer;
-  transition: all .2s;
-  margin-bottom: 12px;
-}
-.btn-submit:hover { background: var(--blanco); transform: translateY(-1px); }
-.btn-submit:active { transform: scale(.98); }
-.btn-submit:disabled { opacity: .4; cursor: not-allowed; transform: none; }
-
-/* ── REGISTRO GANADOR ── */
-.winner-form {
-  display: none;
-  flex-direction: column; gap: 12px;
-}
-.winner-form.show { display: flex; }
-.winner-form input {
-  width: 100%;
-  background: rgba(255,255,255,.06);
-  border: 1px solid rgba(240,192,64,.4);
-  border-radius: 10px; padding: 13px 16px;
-  font-family: 'Barlow', sans-serif;
-  font-size: 15px; color: var(--blanco);
-  outline: none;
-}
-.winner-form input::placeholder { color: rgba(255,255,255,.3); }
-.winner-form input:focus { border-color: var(--oro); }
-.btn-registrar {
-  width: 100%;
-  background: var(--oro);
-  border: none; border-radius: 10px;
-  padding: 15px;
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 18px; letter-spacing: 3px;
-  color: var(--negro); cursor: pointer;
-  transition: all .2s;
-}
-.btn-registrar:hover { background: var(--blanco); }
-
-/* ── TABLERO PÚBLICO ── */
-.leaderboard {
-  width: 100%; margin-top: 32px;
-}
-.lb-title {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 18px; letter-spacing: 2px;
-  color: var(--celeste); margin-bottom: 12px;
-}
-.lb-empty {
-  font-size: 13px; color: rgba(255,255,255,.3);
-  font-style: italic; text-align: center; padding: 20px 0;
-}
-.lb-item {
-  display: flex; align-items: center; gap: 12px;
-  padding: 10px 14px;
-  background: rgba(255,255,255,.03);
-  border: 1px solid rgba(116,172,223,.1);
-  border-radius: 8px; margin-bottom: 6px;
-}
-.lb-jersey {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 14px; color: var(--celeste);
-  min-width: 28px;
-}
-.lb-user { flex: 1; font-size: 13px; }
-.lb-city { font-size: 11px; color: rgba(255,255,255,.4); }
-.lb-time { font-size: 11px; color: rgba(255,255,255,.3); font-family: 'Barlow Condensed', sans-serif; }
-
-/* ── TOAST ── */
-.toast {
-  position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
-  background: var(--gris-medio);
-  border: 1px solid rgba(116,172,223,.3);
-  border-radius: 20px; padding: 10px 20px;
-  font-size: 13px; color: var(--blanco);
-  z-index: 999; opacity: 0;
-  transition: opacity .3s;
-  white-space: nowrap;
-}
-.toast.show { opacity: 1; }
-
-/* ── CONFETTI ── */
-.confetti-piece {
-  position: fixed; top: -10px;
-  width: 8px; height: 8px;
-  animation: fall linear forwards;
-  z-index: 999;
-  border-radius: 2px;
-}
-@keyframes fall {
-  to { transform: translateY(110vh) rotate(720deg); opacity: 0; }
-}
+:root{--c:#74ACDF;--w:#FFF;--k:#0a0a0a;--g:#F0C040;--r:#C8102E;--v:#00C851;--bg:#0a0a1e;--cd:#14142a;--cm:#1e1e3a}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--w);font-family:'Barlow',sans-serif;min-height:100vh;overflow-x:hidden}
+.bg{position:fixed;inset:0;z-index:0;background:repeating-linear-gradient(90deg,rgba(116,172,223,.03) 0,rgba(116,172,223,.03) 1px,transparent 1px,transparent 70px),repeating-linear-gradient(0deg,rgba(116,172,223,.03) 0,rgba(116,172,223,.03) 1px,transparent 1px,transparent 70px),radial-gradient(ellipse at 50% 0%,rgba(116,172,223,.12) 0%,transparent 55%),var(--bg)}
+.wrap{position:relative;z-index:1;max-width:460px;margin:0 auto;padding:0 18px 60px}
+.hdr{text-align:center;padding:28px 0 20px;border-bottom:1px solid rgba(116,172,223,.15);margin-bottom:22px}
+.hdr-brand{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:4px;color:var(--c);opacity:.6;margin-bottom:6px}
+.hdr-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(26px,8vw,40px);line-height:1;letter-spacing:2px}
+.hdr-title span{color:var(--c)}
+.hdr-sub{margin-top:8px;font-family:'Barlow Condensed',sans-serif;font-size:13px;letter-spacing:1px;color:rgba(255,255,255,.4)}
+.cdown{margin-top:14px;display:inline-flex;align-items:center;gap:8px;background:rgba(240,192,64,.08);border:1px solid rgba(240,192,64,.25);border-radius:20px;padding:5px 14px}
+.cdown span{font-family:'Bebas Neue',sans-serif;font-size:14px;color:var(--g)}
+.cdown small{font-size:10px;color:rgba(240,192,64,.5);letter-spacing:1px}
+.sh{background:rgba(116,172,223,.05);border:1px solid rgba(116,172,223,.1);border-radius:10px;padding:12px 16px;margin-bottom:20px;font-size:12px;color:rgba(255,255,255,.4);line-height:1.7;font-family:'Barlow Condensed',sans-serif}
+.sh b{color:rgba(116,172,223,.65);font-weight:600}
+.slbl{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:3px;color:rgba(255,255,255,.3);margin-bottom:12px}
+.pgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-bottom:24px}
+.pbtn{background:var(--cd);border:1px solid rgba(116,172,223,.15);border-radius:9px;padding:9px 4px;cursor:pointer;transition:all .2s;text-align:center;position:relative}
+.pbtn:hover{border-color:var(--c);transform:translateY(-2px)}
+.pbtn.active{border-color:var(--c);background:rgba(116,172,223,.12)}
+.pbtn.won{border-color:var(--g);background:rgba(240,192,64,.08)}
+.pbtn.won::after{content:'✓';position:absolute;top:3px;right:5px;font-size:9px;color:var(--g)}
+.pnum{font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--c);line-height:1}
+.pname{font-family:'Barlow Condensed',sans-serif;font-size:9px;color:rgba(255,255,255,.5);margin-top:1px;line-height:1.2}
+.arena{width:100%;background:rgba(255,255,255,.02);border:1px solid rgba(116,172,223,.12);border-radius:18px;padding:24px 20px;display:none}
+.arena.active{display:block}
+.phdr{display:flex;align-items:center;gap:14px;margin-bottom:20px;padding-bottom:18px;border-bottom:1px solid rgba(255,255,255,.06)}
+.jersey{width:50px;height:50px;background:linear-gradient(135deg,var(--c),rgba(116,172,223,.4));border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--k);flex-shrink:0}
+.pn{font-family:'Bebas Neue',sans-serif;font-size:22px;line-height:1}
+.pp{font-size:11px;color:rgba(255,255,255,.35);font-family:'Barlow Condensed',sans-serif;letter-spacing:1px;margin-top:2px}
+.prog{display:flex;gap:3px;margin-bottom:20px}
+.pdot{flex:1;height:3px;border-radius:2px;background:rgba(255,255,255,.08);transition:background .3s}
+.pdot.done{background:var(--c)}
+.pdot.cur{background:var(--g);animation:bk 1s ease-in-out infinite}
+@keyframes bk{0%,100%{opacity:1}50%{opacity:.3}}
+.zlbl{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:2px;color:rgba(255,255,255,.3);margin-bottom:6px}
+.zona{font-family:'Bebas Neue',sans-serif;font-size:12px;letter-spacing:2px;margin-bottom:16px}
+.zona.exterior{color:rgba(116,172,223,.55)}
+.zona.interior{color:rgba(240,192,64,.75)}
+.zona.premio{color:var(--v)}
+.qw{display:flex;justify-content:center;margin-bottom:22px;perspective:500px}
+.cube{width:120px;height:120px;position:relative;transform-style:preserve-3d;animation:sp 7s linear infinite}
+@keyframes sp{to{transform:rotateY(360deg) rotateX(12deg)}}
+.cube.paused{animation-play-state:paused}
+.face{position:absolute;inset:0;border:1.5px solid rgba(116,172,223,.4);background:rgba(116,172,223,.04);display:flex;align-items:center;justify-content:center;backface-visibility:visible}
+.face svg{width:70px;height:70px;opacity:.55}
+.face.fr{transform:translateZ(60px)}
+.face.bk{transform:translateZ(-60px) rotateY(180deg)}
+.face.lf{transform:translateX(-60px) rotateY(-90deg)}
+.face.rt{transform:translateX(60px) rotateY(90deg)}
+.face.tp{transform:translateY(-60px) rotateX(90deg)}
+.face.bt{transform:translateY(60px) rotateX(-90deg)}
+.hint{background:rgba(116,172,223,.05);border:1px solid rgba(116,172,223,.12);border-radius:9px;padding:12px 14px;margin-bottom:14px}
+.htag{font-family:'Barlow Condensed',sans-serif;font-size:9px;letter-spacing:2px;color:var(--c);opacity:.5;margin-bottom:5px}
+.htxt{font-size:13px;line-height:1.6;color:rgba(255,255,255,.72)}
+.narr{text-align:center;padding:16px;border-radius:10px;margin-bottom:14px;display:none}
+.narr.show{display:block}
+.narr.fail{background:rgba(200,16,46,.08);border:1px solid rgba(200,16,46,.25)}
+.narr.ok{background:rgba(0,200,81,.08);border:1px solid rgba(0,200,81,.25)}
+.narr.win{background:rgba(240,192,64,.1);border:1px solid rgba(240,192,64,.35)}
+.ne{font-size:28px;margin-bottom:6px}
+.nt{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:600;line-height:1.4}
+.nt.fail{color:rgba(230,80,80,.9)}
+.nt.ok{color:rgba(0,200,81,.9)}
+.nt.win{color:var(--g)}
+.ilbl{font-size:11px;color:rgba(255,255,255,.3);font-family:'Barlow Condensed',sans-serif;letter-spacing:1px;margin-bottom:7px}
+.inp{width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(116,172,223,.25);border-radius:9px;padding:13px 14px;font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:3px;color:var(--w);text-align:center;outline:none;transition:border-color .2s;text-transform:uppercase;margin-bottom:12px}
+.inp:focus{border-color:var(--c)}
+.inp.shake{animation:sk .35s ease;border-color:var(--r)}
+@keyframes sk{0%,100%{transform:translateX(0)}25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
+.inp.correct{border-color:var(--v)}
+.btn{width:100%;background:var(--c);border:none;border-radius:9px;padding:14px;font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:3px;color:var(--k);cursor:pointer;transition:all .2s;margin-bottom:10px}
+.btn:hover{background:#fff;transform:translateY(-1px)}
+.btn:disabled{opacity:.35;cursor:not-allowed;transform:none}
+.wf{display:none;flex-direction:column;gap:10px;margin-top:4px}
+.wf.show{display:flex}
+.wf input{width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(240,192,64,.3);border-radius:9px;padding:12px 14px;font-family:'Barlow',sans-serif;font-size:14px;color:var(--w);outline:none}
+.wf input::placeholder{color:rgba(255,255,255,.25)}
+.wf input:focus{border-color:var(--g)}
+.btnr{width:100%;background:var(--g);border:none;border-radius:9px;padding:14px;font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:3px;color:var(--k);cursor:pointer;transition:all .2s}
+.btnr:hover{background:#fff}
+.lb{width:100%;margin-top:28px}
+.lbt{font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:2px;color:var(--c);margin-bottom:10px}
+.lbe{font-size:12px;color:rgba(255,255,255,.25);font-style:italic;text-align:center;padding:16px 0}
+.lbi{display:flex;align-items:center;gap:10px;padding:9px 12px;background:rgba(255,255,255,.02);border:1px solid rgba(116,172,223,.08);border-radius:7px;margin-bottom:5px}
+.lbn{font-family:'Bebas Neue',sans-serif;font-size:13px;color:var(--c);min-width:24px}
+.lbu{flex:1;font-size:12px}
+.lbc{font-size:10px;color:rgba(255,255,255,.35)}
+.lbj{font-size:10px;color:rgba(255,255,255,.25);font-family:'Barlow Condensed',sans-serif}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--cm);border:1px solid rgba(116,172,223,.25);border-radius:18px;padding:9px 18px;font-size:12px;color:var(--w);z-index:999;opacity:0;transition:opacity .3s;white-space:nowrap}
+.toast.show{opacity:1}
+.cf{position:fixed;top:-10px;width:7px;height:7px;animation:fall linear forwards;z-index:999;border-radius:2px}
+@keyframes fall{to{transform:translateY(110vh) rotate(720deg);opacity:0}}
 </style>
 </head>
 <body>
+<div class="bg"></div>
+<div class="wrap">
 
-<div class="bg-field"></div>
+<div class="hdr">
+  <div class="hdr-brand">ANTIQUE PATAGONIA</div>
+  <div class="hdr-title">GANATE UNA <span>CAMISETA</span> 🇦🇷</div>
+  <div class="hdr-sub">11 desafíos · 11 camisetas · Mundial 2026</div>
+  <div class="cdown"><span id="cd">--</span><small>DÍAS PARA EL MUNDIAL</small></div>
+</div>
 
-<div class="container">
+<div class="sh">
+  <b>¿Cómo jugar?</b> Elegí un jugador y respondé cada desafío. Las primeras preguntas son de fútbol puro. Después el juego cambia. El teclado tiene más de letras y números — descubrí qué más puede hacer. Nadie te lo va a decir.
+</div>
 
-  <!-- HEADER -->
-  <div class="header">
-    <div class="header-brand">ANTIQUE PATAGONIA</div>
-    <div class="header-title">GANATE UNA<br><span>CAMISETA</span> 🇦🇷</div>
-    <div class="header-sub">11 desafíos · 11 camisetas · Mundial 2026</div>
-    <div class="countdown-bar">
-      <span id="countdown-days">--</span>
-      <small>DÍAS PARA EL MUNDIAL</small>
+<div class="slbl">Elegí tu jugador</div>
+<div class="pgrid" id="pgrid"></div>
+
+<div class="arena" id="arena">
+  <div class="phdr">
+    <div class="jersey" id="jnum">1</div>
+    <div><div class="pn" id="pn">—</div><div class="pp" id="pp">—</div></div>
+  </div>
+  <div class="prog" id="prog"></div>
+  <div class="zlbl">DESAFÍO</div>
+  <div class="zona exterior" id="zona">CARA EXTERIOR 1</div>
+  <div class="qw">
+    <div class="cube" id="cube">
+      <div class="face fr"><svg viewBox="0 0 80 80" fill="none"><rect x="5" y="5" width="28" height="28" rx="3" stroke="#74ACDF" stroke-width="2"/><rect x="12" y="12" width="14" height="14" rx="1" fill="#74ACDF" opacity=".4"/><rect x="47" y="5" width="28" height="28" rx="3" stroke="#74ACDF" stroke-width="2"/><rect x="54" y="12" width="14" height="14" rx="1" fill="#74ACDF" opacity=".4"/><rect x="5" y="47" width="28" height="28" rx="3" stroke="#74ACDF" stroke-width="2"/><rect x="12" y="54" width="14" height="14" rx="1" fill="#74ACDF" opacity=".4"/><rect x="47" y="47" width="4" height="4" fill="#74ACDF" opacity=".6"/><rect x="55" y="47" width="4" height="4" fill="#74ACDF" opacity=".3"/><rect x="63" y="47" width="4" height="4" fill="#74ACDF" opacity=".6"/><rect x="71" y="47" width="4" height="4" fill="#74ACDF" opacity=".3"/><rect x="47" y="55" width="4" height="4" fill="#74ACDF" opacity=".3"/><rect x="55" y="55" width="4" height="4" fill="#74ACDF" opacity=".6"/><rect x="63" y="55" width="4" height="4" fill="#74ACDF" opacity=".3"/><rect x="71" y="55" width="4" height="4" fill="#74ACDF" opacity=".6"/><rect x="47" y="63" width="4" height="4" fill="#74ACDF" opacity=".6"/><rect x="55" y="63" width="4" height="4" fill="#74ACDF" opacity=".3"/><rect x="63" y="63" width="4" height="4" fill="#74ACDF" opacity=".6"/><rect x="71" y="63" width="4" height="4" fill="#74ACDF" opacity=".3"/></svg></div>
+      <div class="face bk"><svg viewBox="0 0 80 80" fill="none"><rect x="10" y="10" width="60" height="60" rx="6" stroke="#74ACDF" stroke-width="1.5" opacity=".4"/><text x="40" y="48" text-anchor="middle" font-size="22" fill="#74ACDF" opacity=".5" font-family="sans-serif">🇦🇷</text></svg></div>
+      <div class="face lf"><svg viewBox="0 0 80 80" fill="none"><rect x="10" y="10" width="60" height="60" rx="6" stroke="#74ACDF" stroke-width="1.5" opacity=".3"/><text x="40" y="46" text-anchor="middle" font-size="14" fill="#74ACDF" opacity=".5" font-family="sans-serif">AFA</text></svg></div>
+      <div class="face rt"><svg viewBox="0 0 80 80" fill="none"><rect x="10" y="10" width="60" height="60" rx="6" stroke="#F0C040" stroke-width="1.5" opacity=".3"/><text x="40" y="46" text-anchor="middle" font-size="22" fill="#F0C040" opacity=".5" font-family="sans-serif">★</text></svg></div>
+      <div class="face tp"><svg viewBox="0 0 80 80" fill="none"><rect x="10" y="10" width="60" height="60" rx="6" stroke="#74ACDF" stroke-width="1.5" opacity=".3"/></svg></div>
+      <div class="face bt"><svg viewBox="0 0 80 80" fill="none"><rect x="10" y="10" width="60" height="60" rx="6" stroke="#74ACDF" stroke-width="1.5" opacity=".2"/></svg></div>
     </div>
   </div>
-
-  <!-- SELECTOR -->
-  <div class="section-label">Elegí un jugador para desafiar</div>
-  <div class="players-grid" id="playersGrid"></div>
-
-  <!-- ARENA DE JUEGO -->
-  <div class="game-arena" id="gameArena">
-
-    <!-- ENCABEZADO JUGADOR -->
-    <div class="player-header">
-      <div class="jersey-icon" id="jerseyIcon">1</div>
-      <div>
-        <div class="player-info-name" id="playerName">—</div>
-        <div class="player-info-pos" id="playerPos">—</div>
-      </div>
-    </div>
-
-    <!-- PROGRESO -->
-    <div class="progress-row" id="progressRow"></div>
-
-    <!-- ZONA / NIVEL -->
-    <div class="level-label">DESAFÍO</div>
-    <div class="level-zone" id="levelZone">CARA EXTERIOR 1</div>
-
-    <!-- QR ANIMADO -->
-    <div class="qr-wrapper">
-      <div class="qr-cube" id="qrCube">
-        <div class="qr-face front"><svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="5" y="5" width="28" height="28" rx="3" stroke="#74ACDF" stroke-width="2.5"/><rect x="12" y="12" width="14" height="14" rx="1" fill="#74ACDF" opacity=".5"/><rect x="47" y="5" width="28" height="28" rx="3" stroke="#74ACDF" stroke-width="2.5"/><rect x="54" y="12" width="14" height="14" rx="1" fill="#74ACDF" opacity=".5"/><rect x="5" y="47" width="28" height="28" rx="3" stroke="#74ACDF" stroke-width="2.5"/><rect x="12" y="54" width="14" height="14" rx="1" fill="#74ACDF" opacity=".5"/><rect x="47" y="36" width="4" height="4" fill="#74ACDF" opacity=".7"/><rect x="55" y="36" width="4" height="4" fill="#74ACDF" opacity=".7"/><rect x="63" y="36" width="4" height="4" fill="#74ACDF" opacity=".7"/><rect x="71" y="36" width="4" height="4" fill="#74ACDF" opacity=".4"/><rect x="47" y="44" width="4" height="4" fill="#74ACDF" opacity=".4"/><rect x="55" y="44" width="4" height="4" fill="#74ACDF" opacity=".7"/><rect x="63" y="44" width="4" height="4" fill="#74ACDF" opacity=".4"/><rect x="47" y="52" width="4" height="4" fill="#74ACDF" opacity=".7"/><rect x="55" y="52" width="4" height="4" fill="#74ACDF" opacity=".4"/><rect x="63" y="52" width="4" height="4" fill="#74ACDF" opacity=".7"/><rect x="47" y="60" width="4" height="4" fill="#74ACDF" opacity=".4"/><rect x="55" y="60" width="4" height="4" fill="#74ACDF" opacity=".7"/><rect x="63" y="60" width="4" height="4" fill="#74ACDF" opacity=".4"/><rect x="71" y="60" width="4" height="4" fill="#74ACDF" opacity=".7"/><rect x="71" y="44" width="4" height="4" fill="#74ACDF" opacity=".7"/><rect x="71" y="52" width="4" height="4" fill="#74ACDF" opacity=".4"/></svg></div>
-        <div class="qr-face back"><svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="5" y="5" width="28" height="28" rx="3" stroke="#74ACDF" stroke-width="2.5"/><rect x="12" y="12" width="14" height="14" rx="1" fill="#74ACDF" opacity=".5"/><rect x="47" y="5" width="28" height="28" rx="3" stroke="#74ACDF" stroke-width="2.5"/><rect x="54" y="12" width="14" height="14" rx="1" fill="#74ACDF" opacity=".5"/><rect x="5" y="47" width="28" height="28" rx="3" stroke="#74ACDF" stroke-width="2.5"/><rect x="12" y="54" width="14" height="14" rx="1" fill="#74ACDF" opacity=".5"/></svg></div>
-        <div class="qr-face left"><svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="10" y="10" width="60" height="60" rx="6" stroke="#74ACDF" stroke-width="1.5" opacity=".4"/><text x="40" y="45" text-anchor="middle" font-family="sans-serif" font-size="20" fill="#74ACDF" opacity=".6">AFA</text></svg></div>
-        <div class="qr-face right"><svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="10" y="10" width="60" height="60" rx="6" stroke="#74ACDF" stroke-width="1.5" opacity=".4"/><text x="40" y="48" text-anchor="middle" font-family="sans-serif" font-size="28" fill="#74ACDF" opacity=".6">🇦🇷</text></svg></div>
-        <div class="qr-face top"><svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="10" y="10" width="60" height="60" rx="6" stroke="#F0C040" stroke-width="1.5" opacity=".5"/><text x="40" y="48" text-anchor="middle" font-family="sans-serif" font-size="24" fill="#F0C040" opacity=".7">★</text></svg></div>
-        <div class="qr-face bottom"><svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="10" y="10" width="60" height="60" rx="6" stroke="#F0C040" stroke-width="1.5" opacity=".5"/><text x="40" y="48" text-anchor="middle" font-family="sans-serif" font-size="24" fill="#F0C040" opacity=".7">★</text></svg></div>
-      </div>
-    </div>
-
-    <!-- PISTA -->
-    <div class="hint-box" id="hintBox">
-      <div class="hint-tag">PISTA</div>
-      <p id="hintText">Seleccioná un jugador para comenzar.</p>
-    </div>
-
-    <!-- MENSAJE NARRATIVO -->
-    <div class="narrative-msg" id="narrativeMsg">
-      <div class="narrative-emoji" id="narrativeEmoji">⚽</div>
-      <div class="narrative-text" id="narrativeText"></div>
-    </div>
-
-    <!-- INPUT -->
-    <div class="input-zone">
-      <div class="input-label">TU RESPUESTA</div>
-      <input type="text" id="answerInput" class="answer-input" placeholder="ESCRIBÍ AQUÍ" autocomplete="off" autocorrect="off" spellcheck="false">
-    </div>
-
-    <button class="btn-submit" id="btnSubmit" onclick="checkAnswer()">CONFIRMAR ⚡</button>
-
-    <!-- FORMULARIO GANADOR -->
-    <div class="winner-form" id="winnerForm">
-      <input type="text" id="wName" placeholder="Tu nombre completo">
-      <input type="email" id="wEmail" placeholder="Tu email">
-      <input type="text" id="wCity" placeholder="Tu ciudad">
-      <button class="btn-registrar" onclick="registerWinner()">🏆 REGISTRAR MI PREMIO</button>
-    </div>
-
-  </div><!-- /game-arena -->
-
-  <!-- TABLERO PÚBLICO -->
-  <div class="leaderboard" id="leaderboard">
-    <div class="lb-title">🏆 GANADORES</div>
-    <div id="lbList"><div class="lb-empty">Todavía no hay ganadores. ¡Sé el primero!</div></div>
+  <div class="hint"><div class="htag">PISTA</div><p class="htxt" id="htxt">Seleccioná un jugador.</p></div>
+  <div class="narr" id="narr"><div class="ne" id="ne">⚽</div><div class="nt" id="nt"></div></div>
+  <div class="ilbl">TU RESPUESTA</div>
+  <input type="text" id="inp" class="inp" placeholder="ESCRIBÍ AQUÍ" autocomplete="off" autocorrect="off" spellcheck="false">
+  <button class="btn" id="btnOk" onclick="check()">CONFIRMAR ⚡</button>
+  <div class="wf" id="wf">
+    <input type="text" id="wN" placeholder="Tu nombre completo">
+    <input type="email" id="wE" placeholder="Tu email">
+    <input type="text" id="wC" placeholder="Tu ciudad">
+    <button class="btnr" onclick="regW()">🏆 REGISTRAR MI PREMIO</button>
   </div>
+</div>
 
-</div><!-- /container -->
-
+<div class="lb"><div class="lbt">🏆 GANADORES</div><div id="lbl"><div class="lbe">Todavía no hay ganadores. ¡Sé el primero!</div></div></div>
+</div>
 <div class="toast" id="toast"></div>
 
 <script>
-// ══════════════════════════════════════════
-// CONFIGURACIÓN CENTRAL — EDITÁ AQUÍ
-// ══════════════════════════════════════════
-const SHEET_WEBAPP_URL = 'TU_URL_DE_APPS_SCRIPT_AQUI'; // ← se completa en el Paso 2
+const SURL='https://script.google.com/macros/s/AKfycbyJr-Wq7YY6GRqaGf1YCfI-6eLMGjAcSYqYvTpQFxKgOlyXlL24b6gBt9Kap4QkMsAw9w/exec';
 
-const PLAYERS = [
-  {
-    num: 1, name: 'Emiliano Martínez', apodo: 'Dibu', pos: 'Arquero',
-    levels: [
-      { hint: '¿Cuántos penales atajó el Dibu en Qatar 2022? (solo en penales)', answer: '3', zone: 'exterior', msg: ['seguís participando, pero todavía estás afuera del arco 🧤','fría como las manos del Dibu en Qatar, pero seguís en carrera 🥶'] },
-      { hint: 'Número de camiseta del Dibu en la Selección', answer: '23', zone: 'exterior', msg: ['cerca, pero el travesaño te salvó... a él 😅','la pelota pasó rozando, seguí intentando ⚽'] },
-      { hint: '¿En qué año debutó el Dibu en la Selección Mayor?', answer: '2021', zone: 'exterior', msg: ['llegaste al área pero no pudiste definir 🥅','el VAR te anuló... seguí 📺'] },
-      { hint: 'Club inglés donde juega el Dibu actualmente', answer: 'ASTON VILLA', zone: 'exterior', msg: ['la barrera te tapó, seguí probando 🧱','tu tiro se fue por arriba del travesaño 😬'] },
-      { hint: '¿Cómo se llama el festejo del Dibu con los dedos en los oídos?', answer: 'TOPO GIGIO', zone: 'exterior', msg: ['casi casi... el Dibu ya está bailando 💃','estuviste cerca, muy cerca 🎯'] },
-      { hint: '¿En qué estadio atajó los penales en la final del Mundial?', answer: 'LUSAIL', zone: 'exterior', msg: ['llegaste a la línea del área... ya falta menos 🏟️','la cancha te sonríe, seguí avanzando ⚡'] },
-      { hint: 'Apellido del delantero francés al que el Dibu le paró el penal definitivo', answer: 'COMAN', zone: 'interior', msg: ['ya estás adentro del área, el arco se ve 🏆','el Dibu te mira fijo... no te rindas 👀'] },
-      { hint: 'Premio que ganó el Dibu al mejor arquero del Mundial 2022', answer: 'YASHIN', zone: 'interior', msg: ['el guante dorado casi te toca ✨','un paso más y el Dibu abre el arco para vos 🧤'] },
-      { hint: '¿Cuántos mundiales disputó el Dibu con Argentina?', answer: '1', zone: 'interior', msg: ['el penal es tuyo... solo falta patear 🎯','el arco está solo, Dibu se corrió ⚽'] },
-      { hint: '¿Cuál es el nombre completo del Dibu Martínez? (solo el primer nombre de pila)', answer: 'EMILIANO', zone: 'premio', msg: [] }
-    ]
-  },
-  {
-    num: 2, name: 'Nahuel Molina', apodo: 'Nahuel', pos: 'Lateral Derecho',
-    levels: [
-      { hint: '¿En qué club juega Nahuel Molina actualmente?', answer: 'ATLETICO DE MADRID', zone: 'exterior', msg: ['el lateral se fue al fondo pero no llegaste 🏃','tu centro no encontró a nadie, seguí 💨'] },
-      { hint: 'Número de camiseta de Molina en la Selección', answer: '26', zone: 'exterior', msg: ['el pase salió un poco largo 📏','seguís en la cancha, eso ya es algo ⚽'] },
-      { hint: '¿En qué provincia argentina nació Nahuel Molina?', answer: 'FORMOSA', zone: 'exterior', msg: ['te perdiste por el mapa, seguí buscando 🗺️','el GPS argentino falló, intentá de nuevo 🧭'] },
-      { hint: '¿En qué Mundial marcó el gol que le dio el pase a cuartos a Argentina?', answer: '2022', zone: 'exterior', msg: ['casi entrás al área pero te cortaron 🛑','seguís corriendo por la banda, no pares 💪'] },
-      { hint: 'País al que Argentina le ganó en cuartos con el gol de Molina', answer: 'HOLANDA', zone: 'exterior', msg: ['llegaste al corner pero el centro no entró 📐','un poco más y la rompés desde afuera 🔥'] },
-      { hint: '¿Quién le dio el pase gol a Molina en ese partido de cuartos?', answer: 'MESSI', zone: 'exterior', msg: ['el asistidor fue el 10, vos llegaste cerca 🌟','el gol de Molina se revivió en tu memoria ⚡'] },
-      { hint: 'Club de Argentina donde se formó Molina', answer: 'BOCA JUNIORS', zone: 'interior', msg: ['la xeneize te ayudó a llegar más cerca 💙💛','ya estás adentro del área rival 🏟️'] },
-      { hint: '¿Con cuántos años debutó Molina en la Selección?', answer: '23', zone: 'interior', msg: ['cada año que pasó te acerca más al premio ⌛','el tiempo corre pero vos llegás 🎯'] },
-      { hint: 'Posición exacta en que juega Molina (dos palabras)', answer: 'LATERAL DERECHO', zone: 'interior', msg: ['corrés por el borde como él, ya casi llegás 🏃','la banda derecha es tuya esta noche ⚡'] },
-      { hint: '¿Cuál es el primer apellido de Nahuel? (el que todos conocen)', answer: 'MOLINA', zone: 'premio', msg: [] }
-    ]
-  },
-  {
-    num: 3, name: 'Cristian Romero', apodo: 'Cuti', pos: 'Defensor Central',
-    levels: [
-      { hint: '¿En qué club inglés juega el Cuti Romero?', answer: 'TOTTENHAM', zone: 'exterior', msg: ['el defensor te rechazó, seguí intentando 🧱','el Cuti te leyó el pase, probá de nuevo 👀'] },
-      { hint: 'Número de camiseta del Cuti en la Selección', answer: '13', zone: 'exterior', msg: ['el 13 no te trajo suerte esta vez 🍀','la pelota rebotó en el poste, seguí ⚽'] },
-      { hint: '¿En qué ciudad argentina nació el Cuti Romero?', answer: 'CORDOBA', zone: 'exterior', msg: ['la mediterránea no te abrió las puertas todavía 🏙️','seguís en carrera, el Cuti te respeta 💪'] },
-      { hint: '¿Con qué club ganó el Cuti la Serie A italiana?', answer: 'ATALANTA', zone: 'exterior', msg: ['el norte de Italia te quedó cerca 🇮🇹','la bergamasca casi te corona, seguí 🏆'] },
-      { hint: '¿En qué año debutó el Cuti en Primera División?', answer: '2018', zone: 'exterior', msg: ['el año no se alineó, pero vos sí 📅','el debut fue épico, tu respuesta casi también 🔥'] },
-      { hint: 'Apodo del Cuti Romero (cómo le dicen todos)', answer: 'CUTI', zone: 'exterior', msg: ['el apodo te costó, pero llegaste a la mitad 🎯','el Cuti te sonríe desde el fondo 😎'] },
-      { hint: '¿Qué posición ocupa el Cuti en la cancha?', answer: 'DEFENSOR CENTRAL', zone: 'interior', msg: ['ya superaste la línea defensiva 🚧','el Cuti te dejó pasar esta vez ✅'] },
-      { hint: 'País donde ganó la Coppa Italia', answer: 'ITALIA', zone: 'interior', msg: ['la bota te apuntó bien esta vez 🇮🇹','estás a un paso del Coliseo 🏛️'] },
-      { hint: '¿Cuántos mundiales jugó el Cuti con Argentina?', answer: '1', zone: 'interior', msg: ['un mundial, un campeón, un paso más 🏆','ya casi tocás la copa ⭐'] },
-      { hint: '¿Cuál es el primer nombre del Cuti? (nombre de pila completo)', answer: 'CRISTIAN', zone: 'premio', msg: [] }
-    ]
-  },
-  {
-    num: 4, name: 'Nicolás Otamendi', apodo: 'Ota', pos: 'Defensor Central',
-    levels: [
-      { hint: '¿En qué club portugués juega Otamendi actualmente?', answer: 'BENFICA', zone: 'exterior', msg: ['el Ota te sacó la pelota de los pies 🦵','el cabezazo del defensor te bloqueó, seguí 🏋️'] },
-      { hint: 'Número de camiseta de Otamendi en la Selección', answer: '19', zone: 'exterior', msg: ['el número 19 no te salió hoy 🔢','seguís participando como el Ota: sin bajar los brazos 💪'] },
-      { hint: '¿En qué año se consagró campeón del mundo con Argentina?', answer: '2022', zone: 'exterior', msg: ['el año glorioso casi lo recordabas 🌟','Qatar te sussurró algo, seguí 🏆'] },
-      { hint: 'Primer club de Argentina donde jugó Otamendi', answer: 'VELEZ', zone: 'exterior', msg: ['el fortín no te abrió las puertas 🏰','el Ota arrancó en Liniers, vos seguís en carrera ⚽'] },
-      { hint: '¿En qué club inglés jugó Otamendi varios años?', answer: 'MANCHESTER CITY', zone: 'exterior', msg: ['los citizens casi te dieron la pista 🔵','el Etihad estaba cerca, seguí intentando 🏟️'] },
-      { hint: '¿Cuántos mundiales jugó Otamendi con Argentina?', answer: '3', zone: 'exterior', msg: ['tres mundiales, infinita experiencia, vos seguís 🌍','el veterano te da tiempo, aprovechalo ⏳'] },
-      { hint: 'País donde juega Otamendi actualmente', answer: 'PORTUGAL', zone: 'interior', msg: ['Lisboa te abrió las puertas, ya estás dentro 🇵🇹','falta poco, el Ota ya te ve llegar 👀'] },
-      { hint: '¿Cómo se llama el estadio de Benfica?', answer: 'LUZ', zone: 'interior', msg: ['la luz ya te ilumina, casi llegás ✨','el estadio de la Luz te guía al premio 🏟️'] },
-      { hint: 'Posición de Otamendi en la cancha', answer: 'DEFENSOR CENTRAL', zone: 'interior', msg: ['el muro casi cayó, un paso más 🧱','el Ota se hizo a un lado, el premio es tuyo 🏆'] },
-      { hint: 'Escribí OTA (el apodo de Otamendi)', answer: 'OTA', zone: 'premio', msg: [] }
-    ]
-  },
-  {
-    num: 5, name: 'Nicolás Tagliafico', apodo: 'Taglia', pos: 'Lateral Izquierdo',
-    levels: [
-      { hint: '¿En qué club francés juega Tagliafico?', answer: 'LYON', zone: 'exterior', msg: ['el lateral se fue por la izquierda y te dejó 🏃','el Taglia es rápido, seguí corriendo 💨'] },
-      { hint: 'Número de camiseta de Tagliafico en la Selección', answer: '3', zone: 'exterior', msg: ['el tres te esquivó, probá de nuevo 🔢','la banda izquierda está libre para vos ⚽'] },
-      { hint: '¿En qué país europeo jugó Tagliafico antes de Lyon?', answer: 'HOLANDA', zone: 'exterior', msg: ['los molinos de viento no te dieron pistas 🌬️','Ámsterdam casi te responde, seguí 🌷'] },
-      { hint: '¿Con qué club neerlandés jugó Tagliafico?', answer: 'AJAX', zone: 'exterior', msg: ['el Ajax te cortó el camino, seguí avanzando 🔴','los holandeses no te dieron ventaja esta vez 🇳🇱'] },
-      { hint: '¿En qué año se consagró campeón del mundo?', answer: '2022', zone: 'exterior', msg: ['el año de gloria casi lo tenías ✨','Qatar sigue siendo el objetivo, seguí 🏆'] },
-      { hint: '¿Cuántos mundiales jugó Tagliafico con Argentina?', answer: '2', zone: 'exterior', msg: ['dos mundiales, doble experiencia, seguís vos 🌍','el Taglia corrió dos veces, vos podés una más 💪'] },
-      { hint: 'Posición de Tagliafico en la cancha', answer: 'LATERAL IZQUIERDO', zone: 'interior', msg: ['la banda izquierda ya es tuya 🏟️','el Taglia te cede la cancha, avanzá ⚡'] },
-      { hint: 'Ciudad argentina donde nació Tagliafico', answer: 'MERLO', zone: 'interior', msg: ['el conurbano te abrió las puertas 🏙️','Merlo te puso en el mapa, ya falta poco 🗺️'] },
-      { hint: '¿Cuántos Copas América tiene Tagliafico?', answer: '1', zone: 'interior', msg: ['la Copa América brilla en tu camino ⭐','un título más cerca, un paso más al premio 🏆'] },
-      { hint: '¿Cuál es el apellido de Nicolás? (el que todos conocen)', answer: 'TAGLIAFICO', zone: 'premio', msg: [] }
-    ]
-  },
-  {
-    num: 8, name: 'Enzo Fernández', apodo: 'Enzo', pos: 'Mediocampista',
-    levels: [
-      { hint: '¿En qué club inglés juega Enzo Fernández?', answer: 'CHELSEA', zone: 'exterior', msg: ['el volante te interceptó en el medio 🏃','el azul de Londres se escapó, seguí ⚽'] },
-      { hint: 'Número de camiseta de Enzo en la Selección', answer: '24', zone: 'exterior', msg: ['el 24 no fue hoy, intentá de nuevo 🔢','el mediocampo es amplio, tenés espacio 💪'] },
-      { hint: '¿En qué año ganó el premio al mejor jugador joven del Mundial?', answer: '2022', zone: 'exterior', msg: ['el trofeo joven casi te llegó ✨','Qatar te susurró la respuesta, escuchalo 🏆'] },
-      { hint: 'Club argentino donde se formó Enzo Fernández', answer: 'RIVER PLATE', zone: 'exterior', msg: ['el Millonario no te abrió la puerta esta vez 🎩','el Monumental te espera, seguí 🏟️'] },
-      { hint: '¿En qué club portugués jugó antes del Chelsea?', answer: 'BENFICA', zone: 'exterior', msg: ['Lisboa estuvo cerca, seguí buscando 🇵🇹','la luz de Lisboa casi te guió 💡'] },
-      { hint: '¿Cuántos goles marcó Enzo en el Mundial 2022?', answer: '1', zone: 'exterior', msg: ['el golazo ante México se te escapó 🎯','un gol épico, tu memoria casi lo registra ⚽'] },
-      { hint: '¿Con cuántos años ganó el Mundial?', answer: '21', zone: 'interior', msg: ['21 años y campeón, vos también llegás 🌟','la juventud juega a tu favor, seguí ⚡'] },
-      { hint: 'Posición de Enzo en la cancha', answer: 'MEDIOCAMPISTA', zone: 'interior', msg: ['el medio del campo ya es tuyo 🏟️','Enzo te cede el balón, avanzá 💫'] },
-      { hint: '¿Cuánto costó el traspaso de Enzo al Chelsea en millones de euros? (número redondo)', answer: '121', zone: 'interior', msg: ['el traspaso más caro de la historia del Chelsea, casi 💸','los millones casi te llegaron, un paso más 🏆'] },
-      { hint: '¿Cuál es el primer nombre de Enzo Fernández?', answer: 'ENZO', zone: 'premio', msg: [] }
-    ]
-  },
-  {
-    num: 5, name: 'Leandro Paredes', apodo: 'Leo', pos: 'Mediocampista',
-    levels: [
-      { hint: '¿En qué club italiano juega Paredes actualmente?', answer: 'ROMA', zone: 'exterior', msg: ['la ciudad eterna te esquivó, seguí 🏛️','el volante romano no te pasó el balón ⚽'] },
-      { hint: 'Número de camiseta de Paredes en la Selección', answer: '5', zone: 'exterior', msg: ['el cinco no fue hoy, probá de nuevo 🔢','el mediocampo tiene espacio, aprovechalo 💪'] },
-      { hint: '¿En qué país jugó antes de volver a Italia?', answer: 'FRANCIA', zone: 'exterior', msg: ['París casi te dio la pista 🗼','la Torre Eiffel te saludó, seguí 🇫🇷'] },
-      { hint: 'Club francés donde jugó Paredes', answer: 'PSG', zone: 'exterior', msg: ['el parque de los príncipes no te abrió las puertas 👑','el PSG se fue, pero vos seguís 💪'] },
-      { hint: '¿En qué año debutó Paredes en la Selección Argentina?', answer: '2017', zone: 'exterior', msg: ['el año del debut casi lo recordabas 📅','el tiempo juega con tu memoria, seguí ⏳'] },
-      { hint: '¿Cuántas Copas América tiene Paredes?', answer: '1', zone: 'exterior', msg: ['la Copa América brilla en su colección ⭐','un título es suficiente para llegar a la final 🏆'] },
-      { hint: 'Ciudad argentina donde nació Paredes', answer: 'BUENOS AIRES', zone: 'interior', msg: ['la capital te recibió, ya estás dentro 🏙️','el Obelisco te señala el camino ⚡'] },
-      { hint: 'Posición de Paredes en la cancha', answer: 'MEDIOCAMPISTA', zone: 'interior', msg: ['el doble cinco ya es tuyo 🏟️','Paredes te cede la sala del medio, avanzá 💫'] },
-      { hint: '¿Con cuántos años ganó el Mundial?', answer: '28', zone: 'interior', msg: ['28 años de gloria, vos llegás también 🌟','la madurez del campeón te acompaña 🏆'] },
-      { hint: '¿Cuál es el apellido de Leandro?', answer: 'PAREDES', zone: 'premio', msg: [] }
-    ]
-  },
-  {
-    num: 10, name: 'Alexis Mac Allister', apodo: 'Alexis', pos: 'Mediocampista',
-    levels: [
-      { hint: '¿En qué club inglés juega Mac Allister?', answer: 'LIVERPOOL', zone: 'exterior', msg: ['los reds de Anfield se escaparon, seguí 🔴','el You\'ll Never Walk Alone suena para vos ⚽'] },
-      { hint: 'Número de camiseta de Mac Allister en la Selección', answer: '20', zone: 'exterior', msg: ['el 20 no llegó hoy, probá de nuevo 🔢','el mediocampo te espera con los brazos abiertos 💪'] },
-      { hint: '¿En qué club argentino se formó Mac Allister?', answer: 'ARGENTINOS JUNIORS', zone: 'exterior', msg: ['el bicho casi te picó 🐛','La Paternal te saludó desde lejos, seguí 🏟️'] },
-      { hint: '¿Con qué club inglés llegó Mac Allister al Liverpool?', answer: 'BRIGHTON', zone: 'exterior', msg: ['las gaviotas de Brighton volaron lejos 🐦','la costa sur inglesa no te respondió esta vez 🌊'] },
-      { hint: '¿Cuántos goles marcó Mac Allister en el Mundial 2022?', answer: '1', zone: 'exterior', msg: ['el gol en el Mundial casi lo tenías ⚽','un tanto glorioso, tu memoria casi lo revivió 🌟'] },
-      { hint: '¿En qué año ganó el Mundial?', answer: '2022', zone: 'exterior', msg: ['el año dorado casi salió 🏆','Qatar te llama, seguí intentando ⚡'] },
-      { hint: 'Posición de Mac Allister en la cancha', answer: 'MEDIOCAMPISTA', zone: 'interior', msg: ['ya controlás el mediocampo como él 🏟️','Mac Allister te cedió la pelota, avanzá 💫'] },
-      { hint: '¿De qué provincia argentina es oriunda la familia Mac Allister?', answer: 'LA PAMPA', zone: 'interior', msg: ['la llanura pampeana te abrió las puertas 🌾','La Pampa te guía al premio, ya falta poco 🗺️'] },
-      { hint: '¿Cuántos hermanos futbolistas tiene Alexis?', answer: '2', zone: 'interior', msg: ['los Mac Allister son familia de cracks 👨‍👩‍👦','dos hermanos más en la cancha, vos llegás solo 🏆'] },
-      { hint: '¿Cuál es el primer nombre de Mac Allister?', answer: 'ALEXIS', zone: 'premio', msg: [] }
-    ]
-  },
-  {
-    num: 22, name: 'Thiago Almada', apodo: 'Thiago', pos: 'Mediocampista Ofensivo',
-    levels: [
-      { hint: '¿En qué club de la MLS jugó Thiago Almada?', answer: 'ATLANTA UNITED', zone: 'exterior', msg: ['el sur de Estados Unidos no te respondió 🇺🇸','el Five Stripes casi te dio la pista ⚽'] },
-      { hint: 'Número de camiseta de Almada en la Selección', answer: '7', zone: 'exterior', msg: ['el 7 se te escapó, seguí 🔢','el número mágico no fue hoy 💪'] },
-      { hint: '¿En qué club argentino se formó Almada?', answer: 'VELEZ', zone: 'exterior', msg: ['el fortín no abrió sus puertas 🏰','el Lechero de Liniers casi te recibe, seguí ⚽'] },
-      { hint: '¿En qué liga juega Almada actualmente?', answer: 'MLS', zone: 'exterior', msg: ['el soccer americano no te llegó hoy 🏟️','la liga de las estrellas casi te responde ⭐'] },
-      { hint: '¿Con qué club brasileño jugó Almada antes de su actualidad?', answer: 'BOTAFOGO', zone: 'exterior', msg: ['el glorioso de Río casi te daba la pista 🇧🇷','el estrella solitaria no brilló para vos esta vez ★'] },
-      { hint: '¿En qué año debutó Almada en la Selección?', answer: '2022', zone: 'exterior', msg: ['el debut mundialista casi lo tenías 📅','el año glorioso te roza, seguí ⚡'] },
-      { hint: 'Posición de Almada en la cancha', answer: 'MEDIOCAMPISTA OFENSIVO', zone: 'interior', msg: ['ya estás en la zona de ataque 🏟️','Almada te habilitó, avanzá al área 💫'] },
-      { hint: '¿En qué ciudad argentina nació Almada?', answer: 'FUERTE APACHE', zone: 'interior', msg: ['el barrio guerrero te abrió las puertas 🏙️','Fuerte Apache, cuna de cracks, te guía al premio 🌟'] },
-      { hint: '¿Cuántas Copas América tiene Almada?', answer: '1', zone: 'interior', msg: ['la copa continental brilla en su carrera ⭐','un título, un paso más al premio 🏆'] },
-      { hint: '¿Cuál es el primer nombre de Almada?', answer: 'THIAGO', zone: 'premio', msg: [] }
-    ]
-  },
-  {
-    num: 10, name: 'Lionel Messi', apodo: 'Leo', pos: 'Delantero / Capitán',
-    levels: [
-      { hint: '¿Cuántos Balones de Oro tiene Messi? (al 2024)', answer: '8', zone: 'exterior', msg: ['los balones dorados son difíciles de contar... seguí 🥇','ocho veces el mejor del mundo, vos también podés ⚽'] },
-      { hint: '¿En qué club juega Messi actualmente?', answer: 'INTER MIAMI', zone: 'exterior', msg: ['el sur de Florida se te escapó 🌴','Miami te espera, seguí intentando 🇺🇸'] },
-      { hint: '¿Cuántos goles marcó Messi en el Mundial 2022?', answer: '7', zone: 'exterior', msg: ['siete goles de leyenda, tu memoria casi llega 🌟','el diez de Qatar casi te da la respuesta ⚽'] },
-      { hint: '¿En qué año nació Messi?', answer: '1987', zone: 'exterior', msg: ['la fecha de nacimiento del mejor se te escapó 📅','Rosario 1987, seguí buscando 🌹'] },
-      { hint: '¿Cuántas Champions League ganó con el Barcelona?', answer: '4', zone: 'exterior', msg: ['cuatro orejonas, memoria corta, seguí 🏆','Camp Nou guarda los secretos, intentá de nuevo 🏟️'] },
-      { hint: '¿En qué ciudad argentina nació Messi?', answer: 'ROSARIO', zone: 'exterior', msg: ['la cuna del diez casi la nombraste 🌹','Rosario te llama, pero falta un poco más ⚽'] },
-      { hint: '¿Con cuántos años debutó Messi en la Selección mayor?', answer: '18', zone: 'interior', msg: ['18 años y ya cambiaba el mundo 🌍','el debut precoz te acercó al área 💫'] },
-      { hint: '¿Cuántas Copas América ganó Messi?', answer: '2', zone: 'interior', msg: ['dos copas continentales, casi las recordás ⭐','la mayor y la centenario, ya falta poco 🏆'] },
-      { hint: '¿Cuántos mundiales jugó Messi con Argentina?', answer: '5', zone: 'interior', msg: ['cinco mundiales de leyenda, uno más y lo tenés 🌍','el récord mundialista, un paso al premio 🏆'] },
-      { hint: '¿Cuál es el apodo más famoso de Messi? (dos palabras, la segunda es "Pulga")', answer: 'LA PULGA', zone: 'premio', msg: [] }
-    ]
-  },
-  {
-    num: 9, name: 'Julián Álvarez', apodo: 'La Araña', pos: 'Delantero',
-    levels: [
-      { hint: '¿En qué club español juega Julián Álvarez actualmente?', answer: 'ATLETICO DE MADRID', zone: 'exterior', msg: ['el Cholo te frenó por ahora, seguí 🏟️','el colchonero casi te abrió las puertas ⚽'] },
-      { hint: 'Número de camiseta de Álvarez en la Selección', answer: '9', zone: 'exterior', msg: ['el nueve no llegó hoy, probá de nuevo 🔢','el número de goleador te espera 💪'] },
-      { hint: '¿Cuántos goles marcó Álvarez en el Mundial 2022?', answer: '4', zone: 'exterior', msg: ['cuatro goles de araña, tu red no los atrapó 🕷️','la araña tejió y vos casi la contaste 🌟'] },
-      { hint: '¿En qué club inglés jugó Álvarez antes del Atlético?', answer: 'MANCHESTER CITY', zone: 'exterior', msg: ['los citizens no te dieron la pista 🔵','el Etihad casi te responde, seguí 🏟️'] },
-      { hint: '¿En qué club argentino se formó Julián?', answer: 'RIVER PLATE', zone: 'exterior', msg: ['el Millonario casi te abrió las puertas 🎩','la banda roja te espera, seguí ⚽'] },
-      { hint: '¿En qué provincia argentina nació Julián Álvarez?', answer: 'CORDOBA', zone: 'exterior', msg: ['la mediterránea no te respondió esta vez 🏙️','Córdoba te llama, pero falta poco más 💪'] },
-      { hint: '¿Cuál es el apodo de Julián Álvarez?', answer: 'LA ARANA', zone: 'interior', msg: ['la tela de araña ya te envuelve 🕷️','la araña te atrapó en su red, casi llegás 🌟'] },
-      { hint: '¿Con cuántos años jugó su primer Mundial?', answer: '22', zone: 'interior', msg: ['22 años y goleador mundialista, vos llegás ⚡','la juventud y el gol, tu camino al premio 🏆'] },
-      { hint: 'Posición de Álvarez en la cancha', answer: 'DELANTERO', zone: 'interior', msg: ['ya estás mano a mano con el arco 🏟️','la araña se hizo a un lado, el gol es tuyo ⚽'] },
-      { hint: '¿Cuál es el apellido de Julián?', answer: 'ALVAREZ', zone: 'premio', msg: [] }
-    ]
-  }
+// CÓDIGO NUMÉRICO: 0=() 1=| 2=* 3=>>> 4=## 5=$ 6=@@ 7=^^ 8=&& 9=!!!
+
+const P=[
+  {num:1,name:'Emiliano Martínez',ap:'Dibu',pos:'Arquero',lv:[
+    {h:'¿Cuántos penales atajó el Dibu en la tanda de Qatar 2022?',a:'3',z:'exterior',f:['El arco quedó abierto, pero la pelota no entró.','El Dibu te adivinó. Probá de nuevo.'],ok:'Bien. El arco se siente más cerca.'},
+    {h:'¿Cuál es el número de camiseta del Dibu en la Selección?',a:'23',z:'exterior',f:['El número equivocado en la espalda.','La camiseta no es tuya todavía.'],ok:'Buen comienzo. El Dibu te deja avanzar.'},
+    {h:'Final del mundo. Última tanda. El Dibu se para frente a Mbappé. La pelota terminó en el ángulo... ¿de qué lado?',a:'>',z:'exterior',f:['Lado equivocado. El Dibu ya lo sabía.','El penal fue real. La dirección también.'],ok:'Justo ahí. El Dibu se tiró donde vos dijiste.'},
+    {h:'El Dibu juega en un club inglés cuyo nombre empieza con la misma forma que rodea a un correo electrónico.',a:'@',z:'exterior',f:['El club tiene una forma. Buscala en el teclado.','Pensá en cómo empieza una dirección de email.'],ok:'Aston Villa. La @ era la pista.'},
+    {h:'El festejo del Dibu: dos manos que se abren hacia costados opuestos al mismo tiempo. Representalo.',a:'<>',z:'exterior',f:['Las manos del Dibu van en dos direcciones distintas.','Topo Gigio: ambos lados a la vez.'],ok:'Topo Gigio. Perfecto.'},
+    {h:'Qatar 2022. El estadio de la final. Una estructura horizontal en medio del desierto. Tres líneas que lo representan.',a:'---',z:'exterior',f:['El horizonte de Lusail es una línea larga.','Tres trazos simples. El desierto es plano.'],ok:'Lusail. Ya estás dentro del QR.'},
+    {h:'El penal del título. Coman pateó. El Dibu fue para un lado. ¿Para cuál?',a:'<',z:'interior',f:['Un lado, no los dos. Coman eligió.','El Dibu lo detuvo porque fue al lado correcto.'],ok:'Correcto. Ese penal fue historia.'},
+    {h:'El premio más alto para un arquero en el mundo. El Dibu lo ganó en 2022. Representá "lo más alto" con el teclado.',a:'^^^',z:'interior',f:['Más alto que cualquier cosa. El teclado tiene esa tecla.','Tres veces hacia arriba.'],ok:'El Guante de Oro. El más alto.'},
+    {h:'¿Cuántos mundiales disputó el Dibu con la camiseta argentina?',a:'|',z:'interior',f:['Un solo mundial. Una sola marca.','El número más simple. Una línea.'],ok:'Solo uno. Y lo ganó.'},
+    {h:'El código final del Dibu. Una barra, una estrella, una barra. El arco y la pelota adentro.',a:'|*|',z:'premio',f:['Tres caracteres. Barra, algo en el medio, barra.','El arco tiene dos palos. Entre ellos, algo brillante.'],ok:''}
+  ]},
+  {num:26,name:'Nahuel Molina',ap:'Nahuel',pos:'Lateral Derecho',lv:[
+    {h:'¿En qué club de la capital española juega Nahuel Molina actualmente?',a:'ATLETICO DE MADRID',z:'exterior',f:['Un club del Metropolitano. Pensá en colchones.','No es el Real. El otro grande de Madrid.'],ok:'Atlético. Molina corre por esa banda.'},
+    {h:'¿De qué provincia del norte argentino es oriundo Nahuel Molina?',a:'FORMOSA',z:'exterior',f:['Al norte de todo. Frontera con Paraguay.','Una provincia que no aparece mucho en el fútbol.'],ok:'Formosa. De ahí salió el lateral.'},
+    {h:'Molina siempre corre hacia el mismo lado de la cancha. Representá esa dirección tres veces seguidas.',a:'>>>',z:'exterior',f:['El lateral derecho tiene una sola dirección.','Tres veces el mismo símbolo. La banda lo exige.'],ok:'Siempre hacia la derecha. Esa es su banda.'},
+    {h:'En el partido más importante de su vida, Molina recibió un pase de un compañero que brilló más que todos. ¿Cómo representás a una estrella con el teclado?',a:'*',z:'exterior',f:['La estrella del equipo le dio el pase.','Hay una tecla que representa brillo, estrella, luz.'],ok:'Messi. La estrella que lo habilitó.'},
+    {h:'El gol de Molina fue en cuartos de final. Una partición al medio, con avance a ambos lados.',a:'>>|<<',z:'exterior',f:['Cuartos: algo dividido en el centro.','Una línea en el medio. Flechas a cada lado.'],ok:'Cuartos de final. Partido histórico.'},
+    {h:'Molina se formó en el club más famoso del sur de Buenos Aires. Sus colores son azul y oro. Dos elementos brillantes con algo diferente en el medio.',a:'*@*',z:'exterior',f:['Dos elementos brillantes con uno diferente en el centro.','Boca tiene estrella y algo más.'],ok:'Boca Juniors. El origen de Molina.'},
+    {h:'Debutó en la Selección con 23 años. El 2 ya lo conocés. El 3 son tres flechas.',a:'*>>>',z:'interior',f:['Dos dígitos: el 2 y el 3. Cada uno tiene su código.','Ya usaste el código del 2. El 3 son tres de algo.'],ok:'23. Ya dominás el código numérico.'},
+    {h:'Lateral derecho: su posición en la cancha. Una línea de banda que avanza hacia adelante.',a:'-->',z:'interior',f:['Una línea que avanza hacia la derecha.','Guiones y una dirección. La banda derecha.'],ok:'Lateral derecho. Su marca en la cancha.'},
+    {h:'Un solo Mundial. Una sola barra.',a:'|',z:'interior',f:['El más simple. Una línea.','Un mundial, un símbolo.'],ok:'Un mundial. Campeón en el primero.'},
+    {h:'El código del lateral derecho. Dos flechas separadas por una estrella. La banda y el brillo.',a:'>*>',z:'premio',f:['Tres caracteres. Flecha, algo brillante, flecha.','La banda derecha con luz en el centro.'],ok:''}
+  ]},
+  {num:13,name:'Cristian Romero',ap:'Cuti',pos:'Defensor Central',lv:[
+    {h:'¿En qué club londinense juega el Cuti Romero? Pista: no es de los cuatro grandes históricos.',a:'TOTTENHAM',z:'exterior',f:['Los Spurs. El gallo en el escudo.','Norte de Londres. El estadio nuevo.'],ok:'Tottenham. El Cuti es Spurs.'},
+    {h:'¿En qué ciudad argentina nació el Cuti Romero?',a:'CORDOBA',z:'exterior',f:['La mediterránea. La segunda ciudad del país.','Famosa por sus estudiantes y sus peñas.'],ok:'Córdoba. De ahí viene el muro.'},
+    {h:'El Cuti es un muro. Nada pasa. Representá esa pared con tres líneas verticales juntas.',a:'|||',z:'exterior',f:['Tres líneas de lado a lado. Un muro.','Pensá en barreras, verticales, juntas.'],ok:'El muro del Cuti. Nadie lo pasa.'},
+    {h:'Antes del Tottenham ganó un campeonato en Italia. La bota italiana apunta hacia abajo y a la derecha. Representala con dos teclas.',a:'\\>',z:'exterior',f:['Una diagonal y una dirección. La forma de Italia.','La bota: diagonal hacia abajo, punta a la derecha.'],ok:'Atalanta y la Serie A. La bota italiana.'},
+    {h:'Su número en la Selección. El 1 es una barra. El 3 son tres flechas.',a:'|>>>',z:'exterior',f:['Dos dígitos: primero el 1, después el 3.','Ya conocés cómo se escribe cada uno.'],ok:'13. El número del Cuti.'},
+    {h:'Debutó en Primera División en 2018. En el código: 2=* 0=() 1=| 8=&&',a:'*()| &&',z:'exterior',f:['Cuatro dígitos. Cada uno tiene su símbolo.','2-0-1-8. Cuatro códigos seguidos.'],ok:'2018. El año que arrancó todo.'},
+    {h:'El Cuti bloquea, tapa, cierra. Algo encerrado entre dos barreras laterales.',a:'[|]',z:'interior',f:['Un elemento central encerrado entre dos límites.','Pensá en una jaula o un corchete.'],ok:'Bloqueado. Como el Cuti bloquea delanteros.'},
+    {h:'Juega en Inglaterra. La bandera inglesa tiene una cruz: una línea horizontal y una vertical que se cruzan.',a:'-|-',z:'interior',f:['Una línea, algo en el medio, otra línea.','La Cruz de San Jorge simplificada.'],ok:'La cruz inglesa. El Cuti en Premier.'},
+    {h:'¿Cuántos mundiales jugó el Cuti? Un solo símbolo.',a:'|',z:'interior',f:['Solo uno. El que ganó.','Una línea. Nada más.'],ok:'Uno solo. Y fue campeón.'},
+    {h:'El código del defensor campeón. El arco que protege la estrella. Corchete, barra, estrella, barra, corchete.',a:'[|*|]',z:'premio',f:['Cinco caracteres. El muro que guarda algo valioso.','Dos palos, una estrella en el centro, todo protegido.'],ok:''}
+  ]},
+  {num:19,name:'Nicolás Otamendi',ap:'Ota',pos:'Defensor Central',lv:[
+    {h:'¿En qué club portugués juega Otamendi actualmente?',a:'BENFICA',z:'exterior',f:['El más grande de Lisboa. Águila en el escudo.','No es el Sporting ni el Porto.'],ok:'Benfica. El Ota defiende en Lisboa.'},
+    {h:'¿Cuántos mundiales disputó Otamendi con Argentina?',a:'3',z:'exterior',f:['Más de dos. Menos de cuatro.','Un veterano de los grandes torneos.'],ok:'Tres mundiales. Un veterano histórico.'},
+    {h:'El hincha le grita su apodo en la cancha. Tres letras, tres veces, con fuerza total. Representá ese grito con el teclado.',a:'!!!',z:'exterior',f:['Un grito que se repite. Fuerte. Tres veces.','OTA OTA OTA. ¿Cómo gritás algo con teclas?'],ok:'¡¡¡OTA!!! Así lo canta la hinchada.'},
+    {h:'Antes de Portugal jugó en el club más rico y dominante de Inglaterra. Un equipo celeste de Manchester.',a:'$$$',z:'exterior',f:['El club más millonario de la Premier. Tres símbolos de riqueza.','City. El dinero habla. ¿Con qué tecla?'],ok:'Manchester City. El poder del dinero.'},
+    {h:'Su número en la Selección. En el código: 1 es una barra. 9 son tres exclamaciones.',a:'|!!!',z:'exterior',f:['Dos dígitos: primero el 1, después el 9.','El 19 escrito con los símbolos del código.'],ok:'19. El número del Ota.'},
+    {h:'El estadio donde juega en Lisboa se llama "Da Luz". La luz que brilla en puntos separados por silencio.',a:'*.*.*',z:'exterior',f:['Luz que parpadea. Brillo y pausa, brillo y pausa.','Tres destellos separados por algo pequeño.'],ok:'Da Luz. El estadio de Benfica.'},
+    {h:'Portugal queda al extremo oeste de Europa, contra el océano. Una barra y tres flechas que apuntan hacia ese océano.',a:'|<<<',z:'interior',f:['El borde de Europa apunta hacia la izquierda en el mapa.','Una línea y tres cosas que van hacia ese lado.'],ok:'El borde atlántico. Portugal al oeste.'},
+    {h:'Defensor central: el eje de todo el equipo. Una estrella anclada en el centro del campo.',a:'-|-',z:'interior',f:['Algo en el centro, sostenido por dos lados.','El ancla del mediocampo defensivo.'],ok:'El eje central. El Ota sostiene todo.'},
+    {h:'Un solo Mundial ganado. La barra más simple.',a:'|',z:'interior',f:['Uno. El que importaba.','La marca mínima de un campeón.'],ok:'Uno solo. Pero fue el más importante.'},
+    {h:'El código del Ota campeón. Grito, estrella, grito. El rugido que rodea al título.',a:'!*!',z:'premio',f:['Tres caracteres. Algo fuerte, algo brillante, algo fuerte.','El grito del campeón con la estrella en el medio.'],ok:''}
+  ]},
+  {num:3,name:'Nicolás Tagliafico',ap:'Taglia',pos:'Lateral Izquierdo',lv:[
+    {h:'¿En qué club francés juega Tagliafico actualmente?',a:'LYON',z:'exterior',f:['Una ciudad al sur de París. Un club histórico francés.','No es el PSG. El otro grande de Francia.'],ok:'Lyon. El Taglia corre por esa banda.'},
+    {h:'¿Con qué club neerlandés jugó Tagliafico varios años?',a:'AJAX',z:'exterior',f:['Ámsterdam. El club más famoso de Holanda.','La marca roja y blanca del fútbol holandés.'],ok:'Ajax. Ámsterdam lo hizo conocido.'},
+    {h:'Tagliafico siempre va hacia el mismo lado. El opuesto a Molina. Representá esa dirección tres veces.',a:'<<<',z:'exterior',f:['Si Molina va a la derecha, Tagliafico va...','Tres veces el mismo símbolo. La banda izquierda.'],ok:'Siempre hacia la izquierda. Su banda.'},
+    {h:'Su número en la Selección. En el código: cada barra es una unidad.',a:'|||',z:'exterior',f:['Un número pequeño. Tres líneas verticales.','El 3 representado con barras.'],ok:'Número 3. El lateral izquierdo.'},
+    {h:'Disputó dos mundiales con Argentina. Dos marcas iguales juntas.',a:'||',z:'exterior',f:['Dos veces el mismo símbolo. Dos mundiales.','Doble marca.'],ok:'Dos mundiales. El Taglia los vivió todos.'},
+    {h:'Francia tiene el gallo como símbolo. El pico del gallo apunta hacia adelante: diagonal y dirección.',a:'>=',z:'exterior',f:['El pico de un pájaro: algo que señala hacia adelante y algo que iguala.','Dos teclas que juntas forman una punta.'],ok:'Le coq gaulois. El gallo francés.'},
+    {h:'Nació en el conurbano bonaerense. Un punto en el mapa, con contexto alrededor.',a:'(.)',z:'interior',f:['Un punto central rodeado de algo. El mapa tiene contexto.','El lugar marcado en el mapa.'],ok:'Merlo. De ahí viene el Taglia.'},
+    {h:'Una sola Copa América. El brillo de un único título.',a:'*',z:'interior',f:['Una estrella. Un título. Nada más.','El símbolo de algo brillante, solo.'],ok:'Una Copa América. La del 2021.'},
+    {h:'Lateral izquierdo: una flecha que avanza por la banda izquierda.',a:'<--',z:'interior',f:['Una dirección y una línea de banda. La banda izquierda.','La flecha del lateral: apunta hacia su lado.'],ok:'La banda izquierda. Su marca.'},
+    {h:'El código del lateral izquierdo. Flecha izquierda, estrella, flecha izquierda. La banda con brillo.',a:'<*<',z:'premio',f:['Tres caracteres. Su dirección, algo brillante, su dirección.','El camino del lateral campeón.'],ok:''}
+  ]},
+  {num:24,name:'Enzo Fernández',ap:'Enzo',pos:'Mediocampista',lv:[
+    {h:'¿En qué club londinense juega Enzo Fernández? Sus colores son el azul profundo.',a:'CHELSEA',z:'exterior',f:['Stamford Bridge. Los blues de Londres.','El club que pagó el traspaso más caro de su historia por él.'],ok:'Chelsea. El club que apostó todo por Enzo.'},
+    {h:'¿Con cuántos años ganó el Mundial 2022?',a:'21',z:'exterior',f:['Muy joven. Menos de 22.','Un número entre 20 y 22.'],ok:'21 años. El campeón más joven del equipo.'},
+    {h:'Enzo fue el mejor jugador joven del mundo en Qatar. Un ascenso meteórico hacia arriba. Tres veces hacia arriba.',a:'^^^',z:'exterior',f:['Hacia arriba. Tres veces. La trayectoria de un cohete.','El símbolo de subir. Repetido tres veces.'],ok:'Ascenso imparable. El mejor joven del Mundial.'},
+    {h:'River Plate lo formó. El Millonario. El dinero es el símbolo de ese apodo.',a:'$',z:'exterior',f:['River se llama el Millonario por algo. Buscá esa tecla.','Un solo símbolo que representa dinero.'],ok:'River Plate. El Millonario lo formó.'},
+    {h:'Chelsea pagó 121 millones por él. En el código: 1=| 2=* 1=|. Escribí ese número.',a:'|*|',z:'exterior',f:['Tres dígitos: 1, 2 y 1. Cada uno tiene su código.','El traspaso más caro. Tres símbolos.'],ok:'121 millones. El traspaso récord del Chelsea.'},
+    {h:'Antes del Chelsea jugó en el club de Lisboa cuyo estadio se llama Da Luz. La luz que brilla intermitente.',a:'*.*.*',z:'exterior',f:['Lisboa brilla. Puntos de luz separados.','El estadio de la luz, representado con su brillo.'],ok:'Benfica. Da Luz. El paso antes del Chelsea.'},
+    {h:'El mediocampista controla el centro. Una estrella anclada en el medio del campo por dos líneas.',a:'-*-',z:'interior',f:['Una estrella en el centro, sostenida por dos líneas.','El control del mediocampo: equilibrio.'],ok:'El dueño del mediocampo.'},
+    {h:'Su número en la Selección. En el código: 2=* 4=##',a:'*##',z:'interior',f:['Dos dígitos: el 2 y el 4. Ya conocés sus códigos.','El 24 en el lenguaje del juego.'],ok:'24. El número de Enzo.'},
+    {h:'Un solo gol en el Mundial. Ante México. Una exclamación. Un momento definitivo.',a:'!',z:'interior',f:['Un gol. Una sola tecla. La más expresiva.','Algo que se grita cuando pasa algo único.'],ok:'El golazo ante México. Un grito.'},
+    {h:'El código de Enzo. Arroba, estrella, arroba. La red y el brillo del campeón joven.',a:'@*@',z:'premio',f:['Tres caracteres. Algo circular, algo brillante, algo circular.','La red que conecta con la estrella.'],ok:''}
+  ]},
+  {num:5,name:'Leandro Paredes',ap:'Leo',pos:'Mediocampista',lv:[
+    {h:'¿En qué club italiano juega Paredes actualmente? La ciudad eterna.',a:'ROMA',z:'exterior',f:['La capital de Italia. El club de la loba.','No es el Milan ni la Juventus.'],ok:'Roma. Paredes en la ciudad eterna.'},
+    {h:'¿En qué club francés jugó Paredes antes de volver a Italia?',a:'PSG',z:'exterior',f:['El club más poderoso de Francia. Tres letras.','París. El club de los jeques.'],ok:'PSG. El paso parisino de Paredes.'},
+    {h:'El Coliseo Romano: el arco más famoso de la historia. Una barra vertical entre dos paréntesis curvos.',a:'(|)',z:'exterior',f:['Un arco: algo curvo a cada lado con una línea en el centro.','El Coliseo tiene arcos. Representá uno.'],ok:'El Coliseo. La marca de Roma.'},
+    {h:'El PSG tiene el respaldo de Qatar. Dinero sin límite. Dos símbolos de riqueza juntos.',a:'$$',z:'exterior',f:['Dos veces el símbolo del dinero.','El club más rico de Francia. Doble símbolo.'],ok:'El PSG y su poder financiero.'},
+    {h:'Su número en la Selección. En el código: cinco barras verticales.',a:'|||||',z:'exterior',f:['Un número de un solo dígito. Cinco de algo.','El 5 representado con barras.'],ok:'Número 5. El ancla del mediocampo.'},
+    {h:'Una Copa América en su carrera. Una sola estrella.',a:'*',z:'exterior',f:['Un título. Un brillo. Un símbolo.','La Copa América del 2021. Una estrella sola.'],ok:'La Copa América. Ganada.'},
+    {h:'Nació en Buenos Aires. El Obelisco marca el centro de la ciudad: una punta arriba, una barra vertical, una base.',a:'^|^',z:'interior',f:['Una estructura vertical con algo arriba y abajo.','El obelisco porteño: punta, cuerpo, base.'],ok:'Buenos Aires. El Obelisco.'},
+    {h:'Tenía 28 años cuando ganó el Mundial. En el código: 2=* 8=&&',a:'*&&',z:'interior',f:['Dos dígitos: el 2 y el 8. Cada uno tiene su código.','El 28 escrito en el lenguaje del juego.'],ok:'28 años. Campeón en la madurez.'},
+    {h:'El mediocampista ancla: sostiene todo desde abajo. Dos líneas y un eje central.',a:'-|-',z:'interior',f:['El ancla tiene un eje. Dos lados y algo en el centro.','La posición del doble cinco: equilibrio.'],ok:'El doble cinco. El ancla.'},
+    {h:'El código de Paredes. La estrella romana. Paréntesis, estrella, paréntesis.',a:'(*)',z:'premio',f:['Tres caracteres. Un arco, algo brillante adentro, otro arco.','La estrella dentro del Coliseo.'],ok:''}
+  ]},
+  {num:20,name:'Alexis Mac Allister',ap:'Alexis',pos:'Mediocampista',lv:[
+    {h:"¿En qué club inglés juega Mac Allister? Su himno dice 'You'll Never Walk Alone'.",a:'LIVERPOOL',z:'exterior',f:['Anfield Road. Los Reds del norte de Inglaterra.','El club del himno más famoso del fútbol.'],ok:'Liverpool. Mac Allister es Red.'},
+    {h:'¿En qué club argentino se formó Mac Allister? Un bicho del barrio de La Paternal.',a:'ARGENTINOS JUNIORS',z:'exterior',f:['Un club chico de Buenos Aires. Su apodo es "el Bicho".','La Paternal. No es un club de primera línea.'],ok:'Argentinos Juniors. El Bicho lo formó.'},
+    {h:"You'll Never Walk Alone: nunca caminás solo, siempre avanzás juntos. Representá ese avance colectivo hacia adelante con cuatro flechas.",a:'>>>>',z:'exterior',f:['Avanzar juntos. Cuatro veces hacia adelante.','El himno del Liverpool en flechas.'],ok:'YNWA. Cuatro pasos hacia adelante.'},
+    {h:'Brighton está sobre el mar. La costa tiene olas. Las olas tienen una forma ondulada con el teclado.',a:'~~~',z:'exterior',f:['El mar tiene ondas. ¿Qué tecla tiene esa forma?','Tres ondas del océano.'],ok:'Brighton y sus olas. El club que lo lanzó.'},
+    {h:'Un gol en el Mundial. Una sola exclamación. El momento cumbre.',a:'!',z:'exterior',f:['Un gol. La tecla más expresiva. Solo una.','El grito del gol. Una vez.'],ok:'Un golazo mundialista.'},
+    {h:'Su número en la Selección: el 20. En el código: 2=* y el cero es un círculo vacío.',a:'*()',z:'exterior',f:['Dos dígitos: el 2 y el 0. Ya conocés el 2. El 0 es una forma circular.','El 20 en el lenguaje del juego.'],ok:'20. El número de Mac Allister.'},
+    {h:'La Pampa: llanura infinita, sin montañas, sin fin. Una línea recta que no termina. Cinco guiones.',a:'-----',z:'interior',f:['El horizonte pampeano es plano. Completamente plano.','Cinco trazos horizontales sin interrupciones.'],ok:'La Pampa. El horizonte sin fin.'},
+    {h:'Tiene dos hermanos que también juegan al fútbol. Dos barras, representando a los dos.',a:'||',z:'interior',f:['Dos barras. Los dos hermanos.','Una familia de futbolistas: dos marcas iguales.'],ok:'Los Mac Allister. Una familia entera.'},
+    {h:'Mediocampista que controla todo desde el centro. Una estrella en el eje del campo.',a:'-*-',z:'interior',f:['El control del centro. Equilibrio. Estrella en el medio.','Dos líneas y algo brillante entre ellas.'],ok:'El control del mediocampo.'},
+    {h:'El código de Mac Allister. La ola y la estrella. Ola, estrella, ola.',a:'~*~',z:'premio',f:['Tres caracteres. Una onda, algo brillante, otra onda.','Brighton y Liverpool unidos por una estrella.'],ok:''}
+  ]},
+  {num:7,name:'Thiago Almada',ap:'Thiago',pos:'Mediocampista Ofensivo',lv:[
+    {h:'¿En qué club de la Major League Soccer jugó Almada antes de ir a Brasil?',a:'ATLANTA UNITED',z:'exterior',f:['Una ciudad del sur de Estados Unidos. El club con cinco rayas.','Georgia, Estados Unidos. Un club conocido en la MLS.'],ok:'Atlanta United. El salto a América.'},
+    {h:'¿En qué club argentino se formó Thiago Almada?',a:'VELEZ',z:'exterior',f:['Un club del oeste de Buenos Aires. El Fortín.','Liniers. Un club histórico del fútbol argentino.'],ok:'Vélez. El Fortín lo formó.'},
+    {h:'Su número en la Selección. En el código: siete barras verticales.',a:'|||||||',z:'exterior',f:['Un número de un dígito. Siete de algo.','El 7 representado con barras.'],ok:'Número 7. El mediocampista ofensivo.'},
+    {h:'Atlanta United tiene cinco rayas en su escudo. Cinco barras verticales seguidas.',a:'|||||',z:'exterior',f:['Cinco marcas iguales. El escudo del club.','Las cinco rayas del United.'],ok:'Las cinco rayas de Atlanta.'},
+    {h:'Botafogo: el club de la estrella solitaria de Río. Una estrella, un punto, otra estrella.',a:'*.*',z:'exterior',f:['Una estrella, algo pequeño en el centro, otra estrella.','La estrella solitaria tiene contexto alrededor.'],ok:'Botafogo. La estrella solitaria.'},
+    {h:'La MLS es la liga del país del dólar. Un solo símbolo de esa moneda.',a:'$',z:'exterior',f:['El dólar americano. Una sola tecla.','La liga del norte. El dinero americano.'],ok:'La MLS. El fútbol del dólar.'},
+    {h:'Fuerte Apache: el barrio que lo vio nacer. Una fortaleza. Algo encerrado entre corchetes con barras adentro.',a:'[|||]',z:'interior',f:['Una estructura cerrada. Barras protegidas por límites.','El fuerte: paredes y rejas.'],ok:'Fuerte Apache. La fortaleza que lo formó.'},
+    {h:'Una Copa América. Una estrella sola.',a:'*',z:'interior',f:['Un título. Una tecla. La más brillante.','La copa continental. Un brillo solo.'],ok:'La Copa América. Ganada.'},
+    {h:'Mediocampista ofensivo: siempre ataca, siempre termina. Una flecha que avanza y un grito final.',a:'->!',z:'interior',f:['Avance y definición. La flecha y el grito.','El que ataca siempre termina con algo definitivo.'],ok:'Ataque y gol. Su especialidad.'},
+    {h:'El código de Almada. La estrella del Fuerte. Corchete, estrella, corchete.',a:'[*]',z:'premio',f:['Tres caracteres. Un límite, algo brillante adentro, otro límite.','La estrella protegida por el Fuerte.'],ok:''}
+  ]},
+  {num:10,name:'Lionel Messi',ap:'Leo',pos:'Delantero · Capitán',lv:[
+    {h:'¿Cuántos Balones de Oro tiene Messi al 2024? El récord absoluto.',a:'8',z:'exterior',f:['El número más alto en la historia del Balón de Oro.','Más de siete. El récord que nadie tiene.'],ok:'8 Balones de Oro. El más grande.'},
+    {h:'¿En qué ciudad argentina nació Messi?',a:'ROSARIO',z:'exterior',f:['Una ciudad de la provincia de Santa Fe.','La ciudad que le regaló al mundo al mejor de todos.'],ok:'Rosario. La cuna del GOAT.'},
+    {h:'Ocho Balones de Oro. En el código: cada asterisco es un Balón. Escribilos todos.',a:'********',z:'exterior',f:['Ocho veces el símbolo de estrella. Uno por cada Balón.','Contá bien: son ocho.'],ok:'Ocho estrellas. Ocho Balones de Oro.'},
+    {h:'Juega en el sur de Florida. El sol tropical de Miami tiene un centro brillante rodeado de algo curvo.',a:'*()*',z:'exterior',f:['El sol tiene algo en el centro y algo alrededor.','Miami: calor, sol, círculo y brillo.'],ok:'Inter Miami. El sol de Florida.'},
+    {h:'Ganó cuatro Champions League con el Barcelona. En el código: 4=##. Cuatro símbolos de doble numeral.',a:'####',z:'exterior',f:['Cuatro veces el código del 4.','El 4 repetido cuatro veces: cuatro Champions.'],ok:'Cuatro Champions. El dominio del Barça.'},
+    {h:'Debutó en la Selección mayor con 18 años. En el código: 1=| 8=&&',a:'|&&',z:'exterior',f:['Dos dígitos: el 1 y el 8. Sus códigos están en el juego.','El número de su debut tiene dos cifras.'],ok:'18 años. El debut de una leyenda.'},
+    {h:'Ganó dos Copas América. El 2 como estrella. Dos veces. Con algo en el medio.',a:'*-*',z:'interior',f:['Dos estrellas. Separadas por algo. Dos copas.','El 2 como estrella, dos veces, un separador.'],ok:'Dos Copas América. El 2021 y el Centenario.'},
+    {h:'Cinco mundiales disputados. En el código: 5=$. Cinco asteriscos representando cada uno.',a:'*****',z:'interior',f:['Cinco veces el símbolo de estrella. Un mundial por estrella.','El récord de mundiales jugados.'],ok:'Cinco mundiales. El récord eterno.'},
+    {h:'Siete goles en Qatar. En el código: el 7 es una barra. Siete barras verticales.',a:'|||||||',z:'interior',f:['Siete de algo. El código del 7 son barras.','Uno por gol en Qatar. Siete en total.'],ok:'Siete goles. El goleador del Mundial.'},
+    {h:'El código del GOAT. La pulga entre estrellas. Tres asteriscos, flecha derecha, flecha izquierda, tres asteriscos.',a:'***><***',z:'premio',f:['Ocho caracteres. Tres estrellas, algo que señala adentro, tres estrellas.','La pulga en el centro de todas las estrellas.'],ok:''}
+  ]},
+  {num:9,name:'Julián Álvarez',ap:'La Araña',pos:'Delantero',lv:[
+    {h:'¿En qué club de Madrid juega Julián Álvarez actualmente? No es el Real.',a:'ATLETICO DE MADRID',z:'exterior',f:['Los colchoneros. El Metropolitano.','El Cholo los dirige. Rojo y blanco.'],ok:'Atlético de Madrid. La araña colchonera.'},
+    {h:'¿Cuántos goles marcó Julián en el Mundial 2022?',a:'4',z:'exterior',f:['Más de tres. Menos de cinco.','Fue el segundo goleador de Argentina en Qatar.'],ok:'4 goles. La araña tejió su red.'},
+    {h:'La araña teje su tela. Una red de diagonales que se cruzan. Representala con el teclado.',a:'-\\-/-',z:'exterior',f:['La tela de araña tiene cruces diagonales.','Guiones, una diagonal que baja, guión, una diagonal que sube.'],ok:'La tela de la araña. Su red.'},
+    {h:'En el código: 4=##. Cuatro goles en el Mundial son cuatro veces el código del cuatro.',a:'####',z:'exterior',f:['Cuatro veces el símbolo del 4.','El 4 repetido: un símbolo por gol.'],ok:'Cuatro goles. Cuatro símbolos.'},
+    {h:'Se formó en River Plate. El Millonario. El dinero que representa ese apodo.',a:'$$$',z:'exterior',f:['River se llama el Millonario. Tres símbolos de plata.','El dinero del Millonario. Tres veces.'],ok:'River Plate. El Millonario lo formó.'},
+    {h:'Su número en la Selección. En el código: nueve barras verticales.',a:'|||||||||',z:'exterior',f:['Un dígito. El del número 9. Contá las barras.','Nueve barras verticales. El 9 clásico.'],ok:'Número 9. El centrodelantero.'},
+    {h:'La araña atrapa todo en su red. Una red que aprieta: paréntesis, mayor que, X, menor que, paréntesis.',a:'(>X<)',z:'interior',f:['Cinco caracteres. La red que se cierra sobre algo.','Los brazos de la araña atrapando al rival.'],ok:'La red que atrapa. Nadie escapa.'},
+    {h:'Tenía 22 años en el Mundial. En el código: 2=*. El mismo símbolo dos veces.',a:'**',z:'interior',f:['Dos dígitos iguales. El mismo código repetido.','El 22 en el lenguaje del juego: dos veces el 2.'],ok:'22 años. El más joven entre los goleadores.'},
+    {h:'Delantero que siempre define. Una flecha larga que avanza y termina en un grito definitivo.',a:'-->!',z:'interior',f:['Dos guiones, una dirección, y un grito al final.','El disparo al arco: avance y definición.'],ok:'El disparo certero. Su firma.'},
+    {h:'El código de la araña campeona. Los brazos que atrapan la estrella. Paréntesis, asterisco, X, asterisco, paréntesis.',a:'(*X*)',z:'premio',f:['Cinco caracteres. La araña atrapa la estrella en su red.','La X en el centro: la araña marcó el lugar.'],ok:''}
+  ]}
 ];
 
-// ══════════════════════════════════════════
-// ESTADO DEL JUEGO
-// ══════════════════════════════════════════
-let currentPlayer = null;
-let currentLevel = 0;
-let playerProgress = {}; // { playerIndex: { level, done, won } }
-let waitingForWinner = false;
+let cur=null,prg={},ww=false;
 
-// Mensajes por zona (fallback)
-const ZONE_MSGS = {
-  exterior: [
-    { emoji: '⚽', text: 'Seguís participando, pero todavía estás afuera del QR.' },
-    { emoji: '🥅', text: 'Estuviste cerca... pero el travesaño te negó el gol.' },
-    { emoji: '🧤', text: 'El arquero te la sacó. Seguí intentando.' },
-    { emoji: '📺', text: 'El VAR te anuló. Pero podés seguir probando.' },
-    { emoji: '🏃', text: 'Si te arrepentís no llegarás. ¡Dale!' },
-    { emoji: '🎯', text: 'Muy cerca. La pelota rozó el poste.' }
-  ],
-  interior: [
-    { emoji: '🔥', text: 'Ya estás adentro del QR. El premio se siente.' },
-    { emoji: '💫', text: 'Las caras internas te hablan. Escuchalas.' },
-    { emoji: '⚡', text: 'Un paso más y la camiseta es tuya.' }
-  ]
-};
+function uCD(){const d=Math.max(0,Math.floor((new Date('2026-06-11')-new Date())/864e5));document.getElementById('cd').textContent=d;}
+uCD();setInterval(uCD,6e4);
 
-// ══════════════════════════════════════════
-// COUNTDOWN AL MUNDIAL
-// ══════════════════════════════════════════
-function updateCountdown() {
-  const mundial = new Date('2026-06-11T00:00:00');
-  const now = new Date();
-  const diff = Math.floor((mundial - now) / (1000 * 60 * 60 * 24));
-  document.getElementById('countdown-days').textContent = diff > 0 ? diff : '0';
-}
-updateCountdown();
-setInterval(updateCountdown, 60000);
-
-// ══════════════════════════════════════════
-// RENDERIZAR JUGADORES
-// ══════════════════════════════════════════
-function renderPlayers() {
-  const grid = document.getElementById('playersGrid');
-  grid.innerHTML = '';
-  PLAYERS.forEach((p, i) => {
-    const prog = playerProgress[i] || { level: 0, done: false, won: false };
-    const btn = document.createElement('div');
-    btn.className = 'player-btn' + (currentPlayer === i ? ' active' : '') + (prog.won ? ' won' : '');
-    btn.onclick = () => selectPlayer(i);
-    btn.innerHTML = `<div class="player-num">${p.num}</div><div class="player-name">${p.apodo}</div>`;
-    grid.appendChild(btn);
+function rGrid(){
+  const g=document.getElementById('pgrid');g.innerHTML='';
+  P.forEach((p,i)=>{
+    const pr=prg[i]||{lv:0,won:false};
+    const b=document.createElement('div');
+    b.className='pbtn'+(cur===i?' active':'')+(pr.won?' won':'');
+    b.onclick=()=>sel(i);
+    b.innerHTML=`<div class="pnum">${p.num}</div><div class="pname">${p.ap}</div>`;
+    g.appendChild(b);
   });
 }
 
-// ══════════════════════════════════════════
-// SELECCIONAR JUGADOR
-// ══════════════════════════════════════════
-function selectPlayer(idx) {
-  currentPlayer = idx;
-  const p = PLAYERS[idx];
-  if (!playerProgress[idx]) playerProgress[idx] = { level: 0, done: false, won: false };
-  currentLevel = playerProgress[idx].level;
-  waitingForWinner = false;
-
-  document.getElementById('jerseyIcon').textContent = p.num;
-  document.getElementById('playerName').textContent = p.name;
-  document.getElementById('playerPos').textContent = p.pos;
-  document.getElementById('gameArena').classList.add('active');
-  document.getElementById('winnerForm').classList.remove('show');
-  document.getElementById('narrativeMsg').classList.remove('show');
-  document.getElementById('answerInput').value = '';
-  document.getElementById('answerInput').className = 'answer-input';
-  document.getElementById('btnSubmit').disabled = false;
-  document.getElementById('qrCube').classList.remove('paused');
-
-  renderPlayers();
-  renderProgress();
-  renderLevel();
+function sel(i){
+  cur=i;if(!prg[i])prg[i]={lv:0,won:false};ww=false;
+  const p=P[i];
+  document.getElementById('jnum').textContent=p.num;
+  document.getElementById('pn').textContent=p.name;
+  document.getElementById('pp').textContent=p.pos;
+  document.getElementById('arena').classList.add('active');
+  document.getElementById('wf').classList.remove('show');
+  document.getElementById('narr').classList.remove('show');
+  const inp=document.getElementById('inp');
+  inp.value='';inp.className='inp';
+  document.getElementById('btnOk').disabled=false;
+  document.getElementById('cube').classList.remove('paused');
+  rGrid();rProg();rLvl();
 }
 
-// ══════════════════════════════════════════
-// PROGRESO VISUAL
-// ══════════════════════════════════════════
-function renderProgress() {
-  const row = document.getElementById('progressRow');
-  row.innerHTML = '';
-  const p = PLAYERS[currentPlayer];
-  const prog = playerProgress[currentPlayer];
-  p.levels.forEach((_, i) => {
-    const dot = document.createElement('div');
-    dot.className = 'prog-dot';
-    if (i < prog.level) dot.classList.add('done');
-    else if (i === prog.level && !prog.won) dot.classList.add('current');
-    row.appendChild(dot);
+function rProg(){
+  const row=document.getElementById('prog');row.innerHTML='';
+  const p=P[cur],pr=prg[cur];
+  p.lv.forEach((_,i)=>{
+    const d=document.createElement('div');
+    d.className='pdot'+(i<pr.lv?' done':i===pr.lv&&!pr.won?' cur':'');
+    row.appendChild(d);
   });
 }
 
-// ══════════════════════════════════════════
-// RENDERIZAR NIVEL ACTUAL
-// ══════════════════════════════════════════
-function renderLevel() {
-  const p = PLAYERS[currentPlayer];
-  const prog = playerProgress[currentPlayer];
-
-  if (prog.won) {
-    document.getElementById('levelZone').textContent = '🏆 PREMIO GANADO';
-    document.getElementById('levelZone').className = 'level-zone premio';
-    document.getElementById('hintText').textContent = '¡Felicitaciones! Ya registraste tu premio.';
-    document.getElementById('btnSubmit').disabled = true;
-    document.getElementById('qrCube').classList.add('paused');
+function rLvl(){
+  const p=P[cur],pr=prg[cur];
+  if(pr.won){
+    document.getElementById('zona').textContent='🏆 CAMISETA GANADA';
+    document.getElementById('zona').className='zona premio';
+    document.getElementById('htxt').textContent='¡Felicitaciones! Ya registraste tu premio.';
+    document.getElementById('btnOk').disabled=true;
+    document.getElementById('cube').classList.add('paused');
     return;
   }
-
-  const lvl = p.levels[prog.level];
-  if (!lvl) return;
-
-  const zoneLabels = { exterior: 'CARA EXTERIOR ' + (prog.level + 1), interior: 'CARA INTERIOR ' + (prog.level - 5), premio: '⭐ NIVEL FINAL — PREMIO' };
-  document.getElementById('levelZone').textContent = zoneLabels[lvl.zone] || '';
-  document.getElementById('levelZone').className = 'level-zone ' + lvl.zone;
-  document.getElementById('hintText').textContent = lvl.hint;
-  document.getElementById('answerInput').focus();
+  const lv=p.lv[pr.lv];if(!lv)return;
+  const zn={exterior:'CARA EXTERIOR '+(pr.lv+1),interior:'CARA INTERIOR '+(pr.lv-5),premio:'⭐ NIVEL FINAL'};
+  document.getElementById('zona').textContent=zn[lv.z]||'';
+  document.getElementById('zona').className='zona '+lv.z;
+  document.getElementById('htxt').textContent=lv.h;
+  document.getElementById('inp').focus();
 }
 
-// ══════════════════════════════════════════
-// VERIFICAR RESPUESTA
-// ══════════════════════════════════════════
-function checkAnswer() {
-  if (currentPlayer === null) return;
-  const input = document.getElementById('answerInput');
-  const val = input.value.trim().toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-  if (!val) return;
+function nm(s){return s.trim().toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');}
 
-  const p = PLAYERS[currentPlayer];
-  const prog = playerProgress[currentPlayer];
-  const lvl = p.levels[prog.level];
-  const correctRaw = lvl.answer.toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-
-  if (val === correctRaw) {
-    // CORRECTO
-    input.className = 'answer-input correct';
-    const isLast = prog.level === p.levels.length - 1;
-
-    if (isLast) {
-      // GANADOR
-      prog.won = true;
-      prog.level = p.levels.length;
-      playerProgress[currentPlayer] = prog;
-      document.getElementById('qrCube').classList.add('paused');
-      showNarrative('win', '🏆', '¡¡CAMPEÓN!! La camiseta de ' + p.name + ' es tuya. Completá tus datos para reclamarla.');
-      document.getElementById('btnSubmit').disabled = true;
-      document.getElementById('winnerForm').classList.add('show');
-      waitingForWinner = true;
-      launchConfetti();
+function check(){
+  if(cur===null)return;
+  const inp=document.getElementById('inp');
+  const val=inp.value.trim();
+  if(!val)return;
+  const p=P[cur],pr=prg[cur],lv=p.lv[pr.lv];
+  const spec=pr.lv>=2;
+  const ok=spec?(val===lv.a):(nm(val)===nm(lv.a));
+  if(ok){
+    inp.className='inp correct';
+    const last=pr.lv===p.lv.length-1;
+    if(last){
+      pr.won=true;pr.lv=p.lv.length;
+      document.getElementById('cube').classList.add('paused');
+      showN('win','🏆','¡CAMPEÓN! La camiseta de '+p.name+' es tuya. Completá tus datos.');
+      document.getElementById('btnOk').disabled=true;
+      document.getElementById('wf').classList.add('show');
+      ww=true;conf();
     } else {
-      const msgs = lvl.msg && lvl.msg.length > 0 ? lvl.msg : ['¡Correcto! Seguís avanzando 🎯'];
-      showNarrative('ok', '✅', msgs[Math.floor(Math.random() * msgs.length)]);
-      prog.level++;
-      playerProgress[currentPlayer] = prog;
-      currentLevel = prog.level;
-      setTimeout(() => {
-        input.value = '';
-        input.className = 'answer-input';
-        document.getElementById('narrativeMsg').classList.remove('show');
-        renderProgress();
-        renderLevel();
-      }, 2200);
+      showN('ok','✅',lv.ok||'¡Correcto! Seguís avanzando.');
+      pr.lv++;
+      setTimeout(()=>{inp.value='';inp.className='inp';document.getElementById('narr').classList.remove('show');rProg();rLvl();},2000);
     }
-    renderProgress();
-    renderPlayers();
-
+    rProg();rGrid();
   } else {
-    // ERROR
-    input.classList.add('shake');
-    setTimeout(() => { input.classList.remove('shake'); input.className = 'answer-input'; }, 500);
-
-    const zone = lvl.zone;
-    const pool = lvl.msg && lvl.msg.length > 0 ? lvl.msg : ZONE_MSGS[zone] || ZONE_MSGS.exterior;
-    const pick = pool[Math.floor(Math.random() * pool.length)];
-    const emoji = typeof pick === 'object' ? pick.emoji : '⚽';
-    const text = typeof pick === 'object' ? pick.text : pick;
-    showNarrative('fail', emoji, text);
-    setTimeout(() => { document.getElementById('narrativeMsg').classList.remove('show'); }, 3000);
+    inp.classList.add('shake');
+    setTimeout(()=>{inp.className='inp';},400);
+    const msgs=lv.f&&lv.f.length?lv.f:['No es eso. Seguí intentando.'];
+    showN('fail','⚽',msgs[Math.floor(Math.random()*msgs.length)]);
+    setTimeout(()=>{document.getElementById('narr').classList.remove('show');},3200);
   }
 }
 
-function showNarrative(type, emoji, text) {
-  const box = document.getElementById('narrativeMsg');
-  const em = document.getElementById('narrativeEmoji');
-  const tx = document.getElementById('narrativeText');
-  box.className = 'narrative-msg show ' + (type === 'win' ? 'win-msg' : type === 'ok' ? 'ok-msg' : 'fail-msg');
-  em.textContent = emoji;
-  tx.textContent = text;
-  tx.className = 'narrative-text ' + (type === 'win' ? 'win-msg' : type === 'ok' ? 'ok-msg' : 'fail-msg');
+function showN(t,e,txt){
+  const b=document.getElementById('narr');
+  b.className='narr show '+t;
+  document.getElementById('ne').textContent=e;
+  const nt=document.getElementById('nt');
+  nt.textContent=txt;nt.className='nt '+t;
 }
 
-// ══════════════════════════════════════════
-// REGISTRAR GANADOR EN GOOGLE SHEETS
-// ══════════════════════════════════════════
-async function registerWinner() {
-  const name = document.getElementById('wName').value.trim();
-  const email = document.getElementById('wEmail').value.trim();
-  const city = document.getElementById('wCity').value.trim();
-  if (!name || !email || !city) { showToast('Completá todos los campos 👆'); return; }
-
-  const p = PLAYERS[currentPlayer];
-  const emailMasked = email.substring(0, 3) + '***' + email.slice(email.indexOf('@'));
-
-  const payload = {
-    timestamp: new Date().toISOString(),
-    nombre: name,
-    ciudad: city,
-    email: email,
-    emailPublico: emailMasked,
-    qrNumero: p.num,
-    jugador: p.name,
-    gano: 'SI'
-  };
-
-  try {
-    showToast('Registrando tu premio... ⏳');
-    const res = await fetch(SHEET_WEBAPP_URL, {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    });
-    document.getElementById('winnerForm').classList.remove('show');
-    showToast('🏆 ¡Registrado! Antique Patagonia te va a contactar pronto.');
-    renderLeaderboard([payload]);
-  } catch (e) {
-    showToast('Error al registrar. Intentá de nuevo.');
-  }
+async function regW(){
+  const n=document.getElementById('wN').value.trim();
+  const e=document.getElementById('wE').value.trim();
+  const c=document.getElementById('wC').value.trim();
+  if(!n||!e||!c){toast('Completá todos los campos 👆');return;}
+  const p=P[cur];
+  const pub=e.substring(0,3)+'***'+e.slice(e.indexOf('@'));
+  const pay={timestamp:new Date().toISOString(),nombre:n,ciudad:c,email:e,emailPublico:pub,qrNumero:p.num,jugador:p.name,gano:'SI'};
+  try{
+    toast('Registrando... ⏳');
+    await fetch(SURL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(pay)});
+    document.getElementById('wf').classList.remove('show');
+    toast('🏆 ¡Listo! Antique Patagonia te va a contactar.');
+    addLb(pay);
+  }catch(err){toast('Error al registrar. Intentá de nuevo.');}
 }
 
-// ══════════════════════════════════════════
-// TABLERO PÚBLICO
-// ══════════════════════════════════════════
-function renderLeaderboard(extra = []) {
-  const list = document.getElementById('lbList');
-  if (extra.length === 0) {
-    list.innerHTML = '<div class="lb-empty">Todavía no hay ganadores. ¡Sé el primero!</div>';
-    return;
-  }
-  list.innerHTML = extra.map(w => `
-    <div class="lb-item">
-      <div class="lb-jersey">#${w.qrNumero}</div>
-      <div class="lb-user">
-        <div>${w.emailPublico}</div>
-        <div class="lb-city">${w.ciudad}</div>
-      </div>
-      <div class="lb-time">${w.jugador}</div>
-    </div>
-  `).join('');
+function addLb(w){
+  const l=document.getElementById('lbl');
+  if(l.querySelector('.lbe'))l.innerHTML='';
+  l.innerHTML=`<div class="lbi"><div class="lbn">#${w.qrNumero}</div><div class="lbu"><div>${w.emailPublico}</div><div class="lbc">${w.ciudad}</div></div><div class="lbj">${w.jugador}</div></div>`+l.innerHTML;
 }
 
-async function loadLeaderboard() {
-  if (!SHEET_WEBAPP_URL || SHEET_WEBAPP_URL.includes('TU_URL')) return;
-  try {
-    const res = await fetch(SHEET_WEBAPP_URL + '?action=winners');
-    const data = await res.json();
-    if (data && data.length > 0) renderLeaderboard(data);
-  } catch (e) {}
+async function loadLb(){
+  try{
+    const r=await fetch(SURL+'?action=winners');
+    const d=await r.json();
+    if(d&&d.length)document.getElementById('lbl').innerHTML=d.map(w=>`<div class="lbi"><div class="lbn">#${w.qrNumero}</div><div class="lbu"><div>${w.emailPublico}</div><div class="lbc">${w.ciudad}</div></div><div class="lbj">${w.jugador}</div></div>`).join('');
+  }catch(e){}
 }
-loadLeaderboard();
+loadLb();
 
-// ══════════════════════════════════════════
-// CONFETTI
-// ══════════════════════════════════════════
-function launchConfetti() {
-  const colors = ['#74ACDF', '#FFFFFF', '#F0C040', '#C8102E'];
-  for (let i = 0; i < 60; i++) {
-    setTimeout(() => {
-      const el = document.createElement('div');
-      el.className = 'confetti-piece';
-      el.style.left = Math.random() * 100 + 'vw';
-      el.style.background = colors[Math.floor(Math.random() * colors.length)];
-      el.style.animationDuration = (1.5 + Math.random() * 2) + 's';
-      el.style.animationDelay = Math.random() * .5 + 's';
-      document.body.appendChild(el);
-      setTimeout(() => el.remove(), 4000);
-    }, i * 40);
-  }
+function conf(){
+  const cols=['#74ACDF','#FFF','#F0C040','#C8102E'];
+  for(let i=0;i<50;i++)setTimeout(()=>{
+    const el=document.createElement('div');
+    el.className='cf';
+    el.style.cssText=`left:${Math.random()*100}vw;background:${cols[i%4]};animation-duration:${1.5+Math.random()*2}s;animation-delay:${Math.random()*.5}s`;
+    document.body.appendChild(el);
+    setTimeout(()=>el.remove(),4000);
+  },i*35);
 }
 
-// ══════════════════════════════════════════
-// TOAST
-// ══════════════════════════════════════════
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 3000);
+function toast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),3000);
 }
 
-// ENTER para confirmar
-document.addEventListener('keydown', e => {
-  if (e.key === 'Enter' && currentPlayer !== null && !waitingForWinner) checkAnswer();
-});
-
-// INIT
-renderPlayers();
+document.addEventListener('keydown',e=>{if(e.key==='Enter'&&cur!==null&&!ww)check();});
+rGrid();
 </script>
 </body>
 </html>
